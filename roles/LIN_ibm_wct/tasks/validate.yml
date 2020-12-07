@@ -1,0 +1,8 @@
+- name: Validate if WCT is already installed and present
+  stat: path="{{dir_app_wct}}/bin/VersionInfo.sh"
+  register: wct_status
+
+- debug:
+    msg: "WCT is installed here"
+  when: wct_status.stat.exists == true
+

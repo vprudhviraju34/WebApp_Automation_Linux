@@ -1,0 +1,15 @@
+
+- name: Changing heap size for standalone
+  command:  sed -i 's/JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true"/JAVA_OPTS="-Xms{{min_heap}}m -Xmx{{max_heap}}m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true"/g' "{{jboss_scripts_path}}/bin/standalone.conf"
+  register: stand_heap_size
+
+- name: Display output
+  debug: var=stand_heap_size
+
+- name: Changing heap size for domain
+  command: sed -i 's/JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true"/JAVA_OPTS="-Xms{{max_heap}}m -Xmx{{max_heap}}m -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true"/g' "{{jboss_scripts_path}}/bin/domain.conf"
+  register: domain_heap_size
+
+- name: Display output
+  debug: var=domain_heap_size
+

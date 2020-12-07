@@ -1,0 +1,33 @@
+---
+#
+# Variables
+#
+
+jboss_user: jbossadm
+jboss_grp: jbossgrp
+#jboss_service_name: jboss
+
+
+#jboss_install_java: True
+#java_package: java-1_8_0-openjdk
+#java_home: /usr/lib64/jvm/jre-1.8.0-openjdk
+#catalina_home: /usr/lib64/jvm/jre-1.8.0-openjdk
+
+#check_mountpoint_exists: False
+#mount_dir: /appl/RH
+
+# add from setup file
+###########################
+jboss_app_src: /appl/source
+jboss_app_dir: /appl/RH
+jboss_installer: jboss-eap-7.3.0.zip
+jboss_base_version: 7.3
+java_package: java-1_8_0-openjdk
+rhel_java_package: java-1.8.0-openjdk
+jboss_standalone_config_path: jboss/standalone/configuration
+jboss_config_file: standalone.xml
+jboss_scripts_path: /appl/RH/jboss
+jboss_uid: 10015
+jboss_gid: 10015
+min_heap: 2048
+max_heap: 2048

@@ -1,0 +1,49 @@
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_ihs}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_ihs_rp}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_ihs_fp}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: "Extract IBM Archive:"
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_ihs_installer}}"
+    dest: "{{dir_ibm_ihs}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: "Extract IBM IHS RefreshPack:"
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_ihs_installer_rp}}"
+    dest: "{{dir_ibm_ihs_rp}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: "Extract IBM IHS FixPack:"
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_ihs_installer_fp}}"
+    dest: "{{dir_ibm_ihs_fp}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+

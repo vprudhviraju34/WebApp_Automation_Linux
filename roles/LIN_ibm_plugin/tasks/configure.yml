@@ -1,0 +1,15 @@
+#TODO: Uncomment this code when it is decided to use java
+
+- name: Executing Installation Manager for IBM-IHS Plugin 8.x.x
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl install {{ihs_plugin_repo_name[0]}} -repositories {{dir_ibm_plugin}} -installationDirectory {{dir_dest_plugin}} -acceptLicense -showprogress"
+  when: not is_java_required
+  register: output_ihs_plugin
+
+- name: Executing Installation Manager for IBM-IHS Plugin 9.x.x
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl install {{java_repo_name[0]}} {{ihs_plugin_repo_name_fp[0]}} -repositories {{dir_ibm_sdk}},{{dir_ibm_plugin}},{{dir_ibm_plg_rp}},{{dir_ibm_plg_fp}} -installationDirectory {{dir_dest_plugin}} -acceptLicense -showprogress"
+  when: is_java_required
+  register: output_ihs_plugin
+
+
+- name: Display Logs for installation of the IBM-IHS-Plugin
+  debug: var=output_ihs_plugin.stdout_lines

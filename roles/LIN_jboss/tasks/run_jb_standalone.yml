@@ -1,0 +1,74 @@
+- name: Copying standalone.xml configuration file
+  template:
+    src: standalone.xml.j2
+    dest: '{{jboss_app_dir}}/jboss/standalone/configuration/standalone.xml'
+  ignore_errors: yes
+
+- name: Copying standalone-full.xml configuration file
+  template:
+    src: standalone-full.xml.j2
+    dest: '{{jboss_app_dir}}/jboss/standalone/configuration/standalone-full.xml'
+  ignore_errors: yes
+  notify: restart jboss
+
+- name: Configure service file {{ jboss_service_name }}.service
+  template:
+    src: jboss.service.j2
+    dest: '/usr/lib/systemd/system/{{ jboss_service_name }}.service'
+  notify: restart jboss
+
+- name: Enable jboss service on startup
+  systemd:
+    name: "{{ jboss_service_name }}"
+    enabled: "{% if jboss_service_enabled_on_startup %}yes{% else %}no{% endif %}"
+    daemon_reload: yes
+
+- name: Change permission & ownership for Jboss directory
+  shell: "chown -R jbossadm:jbossgrp {{jboss_app_dir}} && chmod -R 755 {{jboss_app_dir}}"
+
+#- name:          Wait 30 seconds for jboss Server to activate
+#  pause:
+#    seconds:     30
+
+#- name: verify jboss service status
+#  command: "systemctl status jboss"
+#  command: "ps -ef|grep -i java"
+#  register: jboss_status
+#- debug: msg="{{jboss_status.stdout}}"
+
+ 
+#
+# - name: "Set Environment Variables"
+#   copy:
+#      src: env.sh
+#      dest: /root/env.sh
+#      mode: 0755
+#
+# - name: Set bash_profile for jboss user
+#   lineinfile:
+#     path: /home/{{jboss_user}}/.bash_profile
+#     line: 'export JAVA_HOME={{java_home}}'
+#
+# - name: Set PATH in bash_profile for jboss user
+#   lineinfile:
+#     path: /home/{{jboss_user}}/.bash_profile
+#     line: 'PATH=$PATH:$JAVA_HOME/bin'
+#
+# - name: Set JAVA PATH in bash_profile for root user
+#   lineinfile:
+#     path: /home/{{jboss_user}}/.bash_profile
+#     line: 'export JAVA_HOME={{java_home}}'
+#
+# - name: Set PATH in bash_profile for root user
+#   lineinfile:
+#     path: /home/{{jboss_user}}/.bash_profile
+#     line: 'export JAVA_HOME={{java_home}}'
+#
+# - name: "Run JBOSS Standalone"
+#   shell: |
+#     source /root/env.sh
+#     {{jboss_app_dir}}/jboss-eap-7.0/bin/standalone.sh -c  standalone-full.xml &
+#   register: run_output
+#
+# - name: Display output
+#   debug: var=run_output.stdout_lines

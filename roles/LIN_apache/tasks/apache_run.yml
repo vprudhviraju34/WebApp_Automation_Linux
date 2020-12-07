@@ -1,0 +1,35 @@
+#- name: check if Apache file exists.
+#  stat:
+#    path: '{{ apache_dir }}/apache/bin/apachectl'
+#  register: apacheinstalled
+
+#- name: Give privilege to wasadm user
+#  lineinfile:
+#    path: "/etc/sudoers"
+#    line: "webadm ALL=NOPASSWD: /appl/freeware/apache/bin/apachectl -k start, /appl/freeware/apache/bin/apachectl -k stop, /appl/freeware/apache/bin/apachectl -k graceful"
+#    insertafter: EOF
+#    regexp: "^#?webadm"
+#    state: present
+#    backup: yes
+
+- name: Running apache command
+  shell: /bin/su - webadm -c "cd {{apache_dir}}/apache/bin;./apachectl -k start" 
+
+- name: Verify Apache services
+  shell: ps -ef | grep -v grep | grep -i http |wc -l
+  register: pscheck
+
+- name: Verify Apache services
+  fail:
+    msg: "Error: HTTPD not successfully installed"
+  when: pscheck.stdout == "0"
+
+- name: Verify Apache HTTP Status
+  shell:  curl -vk http://localhost:8010/index.html
+  when: pscheck.stdout > "0" 
+  register: apachestatuscheck
+
+- name: Apache HTTP Status
+  debug:
+    var: apachestatuscheck
+

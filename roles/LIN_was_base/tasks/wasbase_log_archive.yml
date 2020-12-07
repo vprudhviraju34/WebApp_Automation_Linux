@@ -1,0 +1,50 @@
+- name: 'create CronjobLogs directory'
+  file:
+    path: '{{profile_path}}/{{app_profile01}}/logs/CronjobLogs'
+    state: directory
+    owner: '{{ was_adm_user }}'
+    group: '{{ was_adm_grp }}'
+    mode: "0755"
+    recurse: yes
+
+- name: 'create scripts directory'
+  file:
+    path: '{{profile_path}}/{{app_profile01}}/scripts'
+    state: directory
+    owner: '{{ was_adm_user }}'
+    group: '{{ was_adm_grp }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy WAS Base log archive script
+  copy:
+    src: templates/was_base_log_archive.sh
+    dest: '{{profile_path}}/{{app_profile01}}/scripts'
+    group: '{{ was_adm_grp}}'
+    owner: '{{ was_adm_user }}'
+    mode: '0755'
+    force: yes
+
+- name: Allow "{{ was_adm_user }}" to run crontab
+  block:
+    - blockinfile:
+        path: /etc/cron.allow
+        block: |
+         {{ was_adm_user }}
+    - file:
+        path: /usr/bin/crontab
+        owner: root
+        group: root
+        mode: '4755'
+
+- name: "Cronjob Entry"
+  cron:
+    name: "### WAS Base log retension policy ###"
+    minute: "59"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: '{{profile_path}}/{{app_profile01}}/scripts/was_base_log_archive.sh'
+    user: '{{ was_adm_user }}'
+  

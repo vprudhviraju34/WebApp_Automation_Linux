@@ -1,0 +1,20 @@
+---
+  - name: Ensure /appl/RH/ exists
+    stat:
+      path: /appl/RH/
+    register: file_system_appl_RH_exists
+
+  - name: Fail the execution if /appl/RH/ does not exists
+    fail:
+      msg: Failing the execution due to /appl/RH/ does NOT EXISTS !!
+    when: not file_system_appl_RH_exists.stat.exists
+
+  - name: Ensure /appl/source exists
+    stat:
+      path: /appl/source
+    register: file_system_source_exists
+
+  - name: Fail the execution if /appl/source does not exists
+    fail:
+      msg: Failing the execution due to /appl/source does NOT EXISTS !!
+    when: not file_system_source_exists.stat.exists

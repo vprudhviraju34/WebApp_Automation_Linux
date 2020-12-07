@@ -1,0 +1,17 @@
+
+- name: Change permission for IBM directory
+  shell: "chown -R webadm:webgrp {{dir_plg}} && chmod -R 755 {{dir_plg}}"
+
+- name: Check installation if exists
+  shell: |
+     {{dir_install_mgr}}/eclipse/tools/imcl listInstalledPackages | wc -l
+     exit 0
+  register: pscheck
+
+- name: Display output
+  debug: var=pscheck.stdout
+
+- name: Failing the playbook because installation does not exists
+  fail:
+    msg: "Error: Webserver not successfully installed"
+  when: pscheck.stdout < "3"

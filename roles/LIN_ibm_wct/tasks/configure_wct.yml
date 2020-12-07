@@ -1,0 +1,175 @@
+
+- name: Create directory
+  file:
+    path: "{{dir_wct_base}}"
+    state: directory
+    force: no
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: Create directory
+  file:
+    path: "{{dir_wct_rp}}"
+    state: directory
+    force: no
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: Create directory
+  file:
+    path: "{{dir_wct_fp}}"
+    state: directory
+    force: no
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: Extract WCT base package
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_wct_installer}}"
+    dest: "{{dir_wct_base}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: Extract WCT FixPack package
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_wct_installer_rp}}"
+    dest: "{{dir_wct_fp}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: Extract WCT FixPack package
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_wct_installer_fp}}"
+    dest: "{{dir_wct_fp}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: Check if WCT is already installed.
+  stat:
+    path: "{{ dir_app_wct }}"
+  register: wct_dir
+
+- name: List wct base and fixpack packages.
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablePackages -repositories {{dir_wct_fp}}"
+  register: wct_list
+
+- name: Set repo name for WCT base package
+  set_fact:
+    wct_repo_name: "{{wct_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.[aA-zZ]+.WCT.v9[0-9]_9.[0-9].[0-9]+.[0-9]+_[0-9]+)'
+- debug:
+    msg: "{{wct_repo_name}}"
+
+- name: List Java Packages
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablePackages -repositories {{dir_ibm_sdk}}"
+  register: java_pkg_list
+
+- name: Set repo name for java pkg
+  set_fact:
+    java_repo: "{{java_pkg_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.[aA-zZ]+.(IBMJAVA|jdk).v[0-9]+_[0-9].[0-9].[0-9]+.[0-9]+_[0-9]+)'
+- debug:
+    msg: "{{java_repo}}"
+
+- name: Install wct base & fixpack
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl install {{java_repo[0]}} {{wct_repo_name[0]}} -repositories {{dir_ibm_sdk}},{{dir_wct_base}},{{dir_wct_rp}},{{dir_wct_fp}} -installationDirectory {{ dir_app_wct }} -acceptLicense -sP"
+  when: wct_dir.stat.exists == False
+  register: wct_output
+
+- name: Display wct install output
+  debug: var=wct_output.stdout_lines
+
+- name: Change permission and ownership of directories.
+  file:
+    path: "{{item}}"
+    owner: "{{apache_user}}"
+    group: "{{apache_group}}"
+    recurse: yes
+    state: directory
+  with_items:
+    - "{{dir_wct}}"
+
+####################
+
+#- name: Check if WCT is already installed.
+#  stat:
+#    path: "{{dest_dir}}/Toolbox/"
+#  register: wct_present
+
+#- name: Copy pct-responsefile.txt file to /Toolbox/WCT/.
+#  template:
+#    src: pct_responsefile.txt
+#    dest: "{{dest_dir}}/Toolbox/WCT/"
+#    force: yes
+#  when: wct_present.stat.exists == True
+
+#- name: Import wct definition location.
+#  shell: "{{dest_dir}}/Toolbox/WCT/wctcmd.sh -tool pct -importDefinitionLocation -defLocName IHS -defLocPathname {{dest_dir}}/Plugins/ -response {{dest_dir}}/Toolbox/WCT/pct_responsefile.txt"
+#  when: wct_present.stat.exists == True
+#  failed_when: false
+#  changed_when: "'Tool execution completed successfully' in import_def.stdout"
+#  register: import_def
+#  ignore_errors: yes
+
+#- name: Display import wct definition location output
+#  debug:
+#    msg: "{{ import_def.stdout_lines }}"
+#  when: wct_present.stat.exists == True
+
+###--> changed added to remove and reimport the WCT definition | ended
+#- name: Check if import wct definition location successfully executed or not.
+#  stat:
+#    path: "{{dest_dir}}/Plugins/config/webserver1/"
+#  register: dir_status
+#  when: wct_present.stat.exists == True
+
+#- name: Remove wct definition location.
+#  shell: "{{dest_dir}}/Toolbox/WCT/wctcmd.sh -tool pct -removeDefinitionLocation -defLocPathname {{dest_dir}}/Plugins/"
+#  when: dir_status.stat.exists == false
+#  register: remove_def
+
+#- name: Display Remove wct definition location output
+#  debug:
+#    msg: "{{ remove_def.stdout_lines }}"
+#  when: dir_status.stat.exists == false
+
+#- name: Re-Import wct definition location.
+#  shell: "{{dest_dir}}/Toolbox/WCT/wctcmd.sh -tool pct -importDefinitionLocation -defLocName IHS -defLocPathname {{dest_dir}}/Plugins/ -response {{dest_dir}}/Toolbox/WCT/pct_responsefile.txt"
+#  when: dir_status.stat.exists == false
+#  changed_when: "'Tool execution completed successfully' in reimport_def.stdout"
+#  register: reimport_def
+#  ignore_errors: yes
+
+#- name: Display re-import wct definition location output
+#  debug:
+#    msg: "{{ reimport_def.stdout_lines }}"
+#  when: dir_status.stat.exists == false
+###--> changed added to remove and reimport the WCT definition | ended
+
+#- name: Change permission and ownership of directories.
+#  file:
+#    path: "{{item}}"
+#    owner: "{{apache_user}}"
+#    group: "{{apache_group}}"
+#    recurse: yes
+#    state: directory
+#  with_items:
+#    - "{{dir_app_http}}"
+#    - "{{dest_dir}}"
+#    - "{{dir_install_mgr}}"
+
+#### Below task is not required as confirmed by Vijay ####
+#- name: Create wct definition.
+#  shell: "{{dest_dir}}/Toolbox/WCT/wctcmd.sh -tool pct -createDefinition -defLocName IHS -response {{dest_dir}}/Toolbox/WCT/pct_responsefile.txt"
+#  when: wct_present.stat.exists == True
+#  failed_when: false
+#  changed_when: false
+#  ignore_errors: yes

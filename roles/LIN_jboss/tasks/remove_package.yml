@@ -1,0 +1,5 @@
+- name: Delete Jboss package in Source path
+  file:
+    path: "{{jboss_app_src}}/{{jboss_installer}}"
+    state: absent
+  when: (jboss_package_extracted.changed == true and jboss_package_extracted.extract_results.rc == 0 )

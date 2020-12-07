@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: IBM Http
+  author: Tom N
+  description: IBM Http installation for Daimler
+  license: MIT
+  min_ansible_version: 1.9
+
+  platforms:
+    - name: SUSE
+      versions:
+        - 12
+        - SP 3,4
+  categories:
+    - development
+    - system
+    - web
+
+dependencies: []

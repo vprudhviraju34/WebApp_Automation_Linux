@@ -1,0 +1,46 @@
+---
+# Installs  and Configure IBM WAS
+
+- name: Pre-flight checks - checking the file systems
+  include_tasks: preflight_check.yml
+
+- name: "Create Directories and Delete Old files"
+  include_tasks: cr_dl.yml
+
+### - name: "Remove if there are any old files"
+###   include_tasks: del_old.yml
+
+- name: "Run Installer"
+  include_tasks: run_installer.yml
+
+- name: "Extract and Create Dir for WAS and IBMSDK"
+  include_tasks: ext_cr.yml
+
+- name: "Delete if any old files in was src directory and Run Installer"
+  include_tasks: run_was_installer.yml
+
+- name: Change Permissions and Ownership of the directories
+  include_tasks: ch_perm.yml
+
+- name: Create "{{app_profile01}}" profile
+  include_tasks: cr_profile.yml
+
+- name: creating WAS Base start and stop scripts when server reboots
+  include_tasks: wasbase_restart.yml
+
+- name: WAS Base log archive
+  include_tasks: wasbase_log_archive.yml
+
+- name: Changing historical log file size and rotation
+  include_tasks: wasbase_historical_logs.yml
+
+- name: Heap size
+  include_tasks: heap_size.yml
+
+- name: adding username and pwd in soap file
+  include_tasks: soap_client_props.yml
+
+- name: Restart "{{app_profile01}}" profile
+  include_tasks: restart_profile.yml
+
+

@@ -1,0 +1,5 @@
+- name: Delete tomcat package in Source path
+  file:
+    path: '{{tomcat_src}}/{{tomcat_package}}'
+    state: absent
+  when: (tomcat_package_extracted.changed == true and tomcat_package_extracted.extract_results.rc == 0 )

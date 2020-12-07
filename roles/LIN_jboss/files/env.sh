@@ -1,0 +1,6 @@
+#!/bin/bash
+export JAVA_HOME=/usr/lib64/jvm/jre-1.8.0-openjdk
+#export CATALINA_HOME=/usr/lib64/jvm/jre-1.8.0-openjdk
+###export PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin
+export PATH=$PATH:$JAVA_HOME/bin
+

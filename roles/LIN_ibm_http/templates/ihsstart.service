@@ -1,0 +1,11 @@
+[Unit]
+Description=Example Service Script description goes here
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/sbin/ihsstart.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target

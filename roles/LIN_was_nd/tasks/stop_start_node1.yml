@@ -1,0 +1,31 @@
+---
+- name: Kill all java process in node1
+  shell: "kill -9 `pidof java`"
+  ignore_errors: yes
+
+#- name: Give privilege to wasadm user
+#  lineinfile: 
+#    path: "/etc/sudoers"
+#    line: "wasadm ALL=(ALL) NOPASSWD:ALL"
+#   insertafter: EOF
+#    regexp: "^#?wasadm"
+#    state: present
+#    backup: yes
+
+- name: Change permission for WAS directory
+  shell: "chown -R wasadm:wasgrp {{dir_was_path}} && chmod -R 755 {{dir_was_path}}"
+
+- name: Start Dmgr
+  shell: "su wasadm '{{ profile_path }}/{{ dmgr_profile }}/bin/startManager.sh'"
+  register: dm_start
+  changed_when: dm_start.rc == 0
+
+- name: Start Nodeagent1
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startNode.sh'"
+  register: node_start
+  changed_when: node_start.rc == 0
+
+- name: Start Server1
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startServer.sh' {{server_name01}}"
+  register: srv_start
+  changed_when: srv_start.rc == 0

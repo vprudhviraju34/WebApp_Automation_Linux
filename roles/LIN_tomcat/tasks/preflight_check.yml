@@ -1,0 +1,23 @@
+---
+#- name: Check File System exists or not
+  #hosts: all
+  #tasks:
+  - name: Ensure /appl/freeware/ exists
+    stat:
+      path: /appl/freeware/
+    register: file_system_appl_free_exists
+
+  - name: Fail the execution if /appl/freeware/ does not exists
+    fail:
+      msg: Failing the execution due to /appl/freeware/ does NOT EXISTS !!
+    when: not file_system_appl_free_exists.stat.exists
+  
+  - name: Ensure /appl/source exists
+    stat:
+      path: /appl/source
+    register: file_system_source_exists
+
+  - name: Fail the execution if /appl/source does not exists
+    fail:
+      msg: Failing the execution due to /appl/source does NOT EXISTS !!
+    when: not file_system_source_exists.stat.exists

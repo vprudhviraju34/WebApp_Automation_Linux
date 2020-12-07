@@ -1,0 +1,149 @@
+- name: 'create AutoStartupLogs directory'
+  file:
+    path: '{{jboss_scripts_path}}/standalone/log/AutoStartupLogs'
+    state: directory
+    owner: '{{ jboss_user }}'
+    group: '{{ jboss_grp }}'
+    mode: "0755"
+    recurse: yes
+
+### standalone.xml
+
+- name: Copy Jboss start script
+  copy: 
+    src: templates/jboss_profile_default_start.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone.xml" 
+
+- name: Copy JBoss service script
+  copy:
+    src: templates/jboss_profile_default_start.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone.xml"
+
+- name: enable JBoss service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable jboss_profile_default_start.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/jboss_profile_default_start.service
+  register: jboss_default_enable
+  when: jboss_config_file == "standalone.xml"
+
+- name: Display output
+  debug: var=jboss_default_enable.results[2].stdout_lines
+  when: jboss_config_file == "standalone.xml"
+ 
+### standalone-ha.xml
+
+- name: Copy Jboss start script
+  copy:
+    src: templates/jboss_profile_ha_start.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone-ha.xml"
+
+- name: Copy JBoss service script
+  copy:
+    src: templates/jboss_profile_ha_start.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone-ha.xml"
+
+- name: enable JBoss service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable jboss_profile_ha_start.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/jboss_profile_ha_start.service
+  register: jboss_ha_enable
+  when: jboss_config_file == "standalone-ha.xml"
+
+- name: Display output
+  debug: var=jboss_ha_enable.results[2].stdout_lines
+  when: jboss_config_file == "standalone-ha.xml"
+
+### standalone-full.xml
+
+- name: Copy Jboss start script
+  copy:
+    src: templates/jboss_profile_full_start.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone-full.xml"
+
+- name: Copy JBoss service script
+  copy:
+    src: templates/jboss_profile_full_start.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone-full.xml"
+
+- name: enable JBoss service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable jboss_profile_full_start.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/jboss_profile_full_start.service
+  register: jboss_full_enable
+  when: jboss_config_file == "standalone-full.xml"
+
+- name: Display output
+  debug: var=jboss_full_enable.results[2].stdout_lines
+  when: jboss_config_file == "standalone-full.xml"
+
+### standalone-full-ha.xml
+
+- name: Copy Jboss start script
+  copy:
+    src: templates/jboss_profile_full-ha_start.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone-full-ha.xml"
+
+- name: Copy JBoss service script
+  copy:
+    src: templates/jboss_profile_full-ha_start.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+  when: jboss_config_file == "standalone-full-ha.xml"
+
+- name: enable JBoss service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable jboss_profile_full-ha_start.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/jboss_profile_full-ha_start.service
+  register: jboss_full_ha_enable
+  when: jboss_config_file == "standalone-full-ha.xml"
+
+- name: Display output
+  debug: var=jboss_full_ha_enable.results[2].stdout_lines
+  when: jboss_config_file == "standalone-full-ha.xml"
+

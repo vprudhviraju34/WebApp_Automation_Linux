@@ -1,0 +1,36 @@
+- name: create ibm-was group
+  group:
+    name: '{{ was_adm_grp }}'
+    system: true
+    state: present
+
+- name: create ibm-was user
+  user:
+    name: '{{ was_adm_user }}'
+    group: '{{ was_adm_grp }}'
+    createhome: true
+    state: present
+    system: true
+
+- name: 'create directory: '
+  file:
+    path: "{{opr_dir}}/ibm_im"
+    state: directory
+
+- name: "Change Permissions and ownership of the directories"
+  file:
+    path: '{{appl_src}}'
+    mode: '0775'
+    recurse: yes
+
+# - name: Copy installers source from Ansible Controller
+#   copy:
+#     src: '{{ appl_src}}/{{ item }}'
+#     dest: '{{ dest_dir }}'
+#   with_items:
+#     - "{{ sw_binaries }}"
+
+#- name: "Delete Source and Operations files"
+#  file:
+#    path: '{{dir_install_mgr}}'
+#    state: absent

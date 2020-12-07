@@ -1,0 +1,30 @@
+- name: create ibm-was group
+  group:
+    name: '{{ apache_group }}'
+    system: true
+    state: present
+
+- name: create ibm-was user
+  user:
+    name: '{{ apache_user }}'
+    group: '{{ apache_group }}'
+    createhome: true
+    state: present
+    system: true
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_im}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: Extract IBM Archive
+  unarchive:
+    src: '{{dir_tmp_src}}/{{agent_installer}}'
+    dest: "{{dir_ibm_im}}"
+    copy: no
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+

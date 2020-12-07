@@ -1,0 +1,34 @@
+
+
+- name: get Server node name
+#  shell: "grep 'Node name:' '{{ profile_path }}/{{ app_profile01 }}/logs/AboutThisProfile.txt' |cut -d: -f 2 | tr -d ' '"
+  shell: "grep 'Node name:' '{{ profile_path }}/{{ app_profile01 }}/logs/AboutThisProfile.txt' |sed 's/.*: //g'"
+  register: server_node_name
+
+- name: Display output
+  debug: var=server_node_name
+
+- name: Changing SystemErr historical file size and rotation
+  shell: sed -i 's#fileName="${SERVER_LOG_ROOT}/SystemErr.log" rolloverType="SIZE" maxNumberOfBackupFiles="5" rolloverSize="1"#fileName="${SERVER_LOG_ROOT}/SystemErr.log" rolloverType="{{rolloverType}}" maxNumberOfBackupFiles="{{backupfiles}}" rolloverSize="{{rolloversize}}"#g' "{{dest_dir}}/profiles/{{app_profile01}}/config/cells/{{server_node_name.stdout}}Cell/nodes/{{server_node_name.stdout}}/servers/{{server_name01}}/server.xml"
+  register: err_historical_logs
+
+#- name: Explicitly specifying positional matched groups in replacement
+#  replace:
+#    path: /appl/IBM/WebSphere/AppServer/profiles/AppSrv01/config/cells/TADCA0000A20Node01Cell/nodes/TADCA0000A20Node01/servers/Server1/server.xml
+#    regexp: 'fileName="${SERVER_LOG_ROOT}/SystemErr.log" rolloverType="SIZE" maxNumberOfBackupFiles="150" rolloverSize="150"'
+#    replace: 'fileName="${SERVER_LOG_ROOT}/SystemErr.log" rolloverType="SIZE" maxNumberOfBackupFiles="15" rolloverSize="15"'
+#  register: historical_logs
+#
+- name: Display output
+  debug: var=err_historical_logs
+
+
+
+- name: Changing SystemOut historical file size and rotation
+  shell: sed -i 's#fileName="${SERVER_LOG_ROOT}/SystemOut.log" rolloverType="SIZE" maxNumberOfBackupFiles="5" rolloverSize="1"#fileName="${SERVER_LOG_ROOT}/SystemOut.log" rolloverType="{{rolloverType}}" maxNumberOfBackupFiles="{{backupfiles}}" rolloverSize="{{rolloversize}}"#g' "{{dest_dir}}/profiles/{{app_profile01}}/config/cells/{{server_node_name.stdout}}Cell/nodes/{{server_node_name.stdout}}/servers/{{server_name01}}/server.xml"
+  register: out_historical_logs
+
+- name: Display output
+  debug: var=out_historical_logs
+
+

@@ -1,0 +1,19 @@
+---
+galaxy_info:
+  role_name: Install IBM WASND Server
+  author: Alok Ratha
+  description: IBM WASND server installation for Daimler
+  license: MIT
+  min_ansible_version: 1.9
+
+  platforms:
+    - name: SUSE
+      versions:
+        - 12
+        - SP 2,3,4
+  categories:
+    - development
+    - system
+    - web
+
+dependencies: []

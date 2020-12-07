@@ -1,0 +1,42 @@
+---
+# Tasks file for ansible-role-suse-ibm-wasnd
+
+- name: "Check required variables"
+  include_tasks: verify_variable.yml
+
+- name: "Check if required packages are installed"
+  include_tasks: setup_os.yml
+
+- name: "Create was user"
+  include_tasks: create_user.yml
+
+- name: "Create required directories"
+  include_tasks: root_dir.yml
+
+- name: "Extract package binaries"
+  include_tasks: extract_binaries.yml
+
+- name: "Install IBM installation Manager"
+  include_tasks: install_iim.yml
+
+- name: "Install IBM WAS server"
+  include_tasks: install_wasnd.yml
+
+- name: "Setup first node"
+  include_tasks: setup_first_node.yml
+  when: ansible_play_hosts.index(inventory_hostname) == 0
+
+###- name: "Setup second node"
+###  include_tasks: setup_second_node.yml
+###  when: ansible_play_hosts.index(inventory_hostname) == 1
+
+- name: "Cleanup directories"
+  include_tasks: cleanup.yml
+
+- name: "Kill java and restart Dmgr/Nodeagent/Server on first node"
+  include_tasks: stop_start_node1.yml
+  when: ansible_play_hosts.index(inventory_hostname) == 0
+
+###- name: "Kill java and restart Nodeagent/Server on second node"
+###  include_tasks: stop_start_node2.yml
+###  when: ansible_play_hosts.index(inventory_hostname) == 1

@@ -1,0 +1,15 @@
+#- name: Validate if IHS apachectl is already installed and present
+#  stat: path="{{dir_app_http}}/bin/apachectl"
+#  register: apachectl_status
+
+- name: Validate if installation exists or not
+  stat: path="{{dir_install_mgr}}/eclipse/tools/imcl"
+  register: iim_installation_status
+
+- debug:
+    msg: "Installation Manager is already installed"
+  when:  iim_installation_status.stat.exists == true
+
+#- set_fact:
+#    iim_already_installed: yes
+#  when: pscheck_status.stat.exists

@@ -1,0 +1,35 @@
+- name: Validate if IHS is already configured or not
+  include_tasks: validate.yml
+
+- name: Create directory and Extract WAS file
+  include_tasks: extract_ihs.yml
+  when: not ihs_already_installed
+
+- name: Extract IBM SDK
+  include_tasks: extract_sdk.yml
+  when: not ihs_already_installed
+
+- name: List avilable Packages
+  include_tasks: list_package.yml
+  when: not ihs_already_installed
+
+- name: Delete Old HTTP files and Run Installer
+  include_tasks: configure.yml
+  when: not ihs_already_installed
+
+- name: Change Ownership of the HTTP folder and Start apache_run
+  include_tasks: configure_http.yml
+  when: not ihs_already_installed
+
+- name: creating IHS start and stop scripts when server reboots 
+  include_tasks: ihs_restart.yml
+  when: not ihs_already_installed 
+
+- name: IHS log archive
+  include_tasks: ihs_log_archive.yml
+  when: not ihs_already_installed
+
+
+#- name: Remove apache and Source Temporary Directory
+#  include_tasks: del_src.yml
+#  when: not ihs_already_installed

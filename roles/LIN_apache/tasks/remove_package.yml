@@ -1,0 +1,5 @@
+- name: Delete apache package in Source path
+  file:
+    path: "{{apache_src}}/{{apache_package}}"
+    state: absent
+  when: (apache_package_extracted.changed == true and apache_package_extracted.extract_results.rc == 0 )

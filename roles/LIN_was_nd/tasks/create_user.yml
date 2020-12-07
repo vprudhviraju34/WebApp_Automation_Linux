@@ -1,0 +1,16 @@
+---
+
+- name: create ibm-was group
+  group:
+    name: '{{ was_grp }}'
+    system: true
+    state: present
+
+- name: create ibm-was user
+  user:
+    name: '{{ was_user }}'
+    group: '{{ was_grp }}'
+    createhome: true
+    state: present
+    system: true
+

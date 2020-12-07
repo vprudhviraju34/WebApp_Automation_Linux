@@ -1,0 +1,14 @@
+[Unit]
+Description=IBM WebSphere Application Server
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/wasBase.sh start
+ExecStop=/usr/local/sbin/wasBase.sh stop
+ExecRestart=/usr/local/sbin/wasBase.sh restart
+
+User=root
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

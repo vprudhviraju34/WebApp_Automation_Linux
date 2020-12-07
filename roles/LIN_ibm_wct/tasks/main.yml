@@ -1,0 +1,14 @@
+- name: Validate if WCT is already configured or not
+  include_tasks: validate.yml
+
+- name: Extract IBM SDK
+  include_tasks: extract_sdk.yml
+  when: wct_status.stat.exists == false
+
+- name: Install WCT Base & FixPack and configures WCT to create Definition.
+  include_tasks: configure_wct.yml
+  when: wct_status.stat.exists == false
+
+#- name: Remove apache and Source Temporary Directory
+#  include_tasks: del_src.yml
+#  when: wct_status.stat.exists == false

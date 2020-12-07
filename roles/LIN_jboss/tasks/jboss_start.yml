@@ -1,0 +1,36 @@
+
+
+- name: "Start default JBoss profile"
+  shell: |
+    /bin/su - jbossadm -c "{{jboss_scripts_path}}/bin/standalone.sh &"
+    exit 0
+  register: jboss_default_started
+  when: jboss_config_file == "standalone.xml"
+
+- name: "Start HA JBoss profile"
+  shell: |
+    /bin/su - jbossadm -c "{{jboss_scripts_path}}/bin/standalone.sh -c standalone-ha.xml &"
+    exit 0
+  register: jboss_ha_started
+  when: jboss_config_file == "standalone-ha.xml"
+
+- name: "Start Full JBoss profile"
+  shell: |
+    /bin/su - jbossadm -c "{{jboss_scripts_path}}/bin/standalone.sh -c standalone-full.xml &"
+    exit 0
+  register: jboss_full_started
+  when: jboss_config_file == "standalone-full.xml"
+
+- name: "Start Full-HA JBoss profile"
+  shell: |
+    /bin/su - jbossadm -c "{{jboss_scripts_path}}/bin/standalone.sh -c standalone-full-ha.xml &"
+    exit 0
+  register: jboss_full_ha_started
+  when: jboss_config_file == "standalone-full-ha.xml"
+
+- name: Change permission & ownership for Jboss directory
+  shell: "chown -R jbossadm:jbossgrp {{jboss_app_dir}} && chmod -R 755 {{jboss_app_dir}}"
+
+- name: Change permission & ownership for source directory
+  shell: "chown -R jbossadm:jbossgrp {{jboss_app_src}} && chmod -R 755 {{jboss_app_src}}"
+

@@ -1,0 +1,26 @@
+---
+- name: Kill all java process in node2
+  shell: "kill -9 `pidof java`"
+  ignore_errors: yes
+
+- name: Give privilege to wasadm user
+  lineinfile: 
+    path: "/etc/sudoers"
+    line: "wasadm ALL=(ALL) NOPASSWD:ALL"
+    insertafter: EOF
+    regexp: "^#?wasadm"
+    state: present
+    backup: yes
+
+- name: Change permission for WAS directory
+  shell: "chown -R wasadm:wasgrp /appl/IBM/ && chmod -R 755 /appl/IBM/"
+
+#- name: Start Nodeagent2
+#  shell: "su wasadm '{{ profile_path }}/{{ app_profile02 }}/bin/startNode.sh'"
+#  register: node2_start
+#  changed_when: node2_start.rc == 0
+
+- name: Start Server2
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile02 }}/bin/startServer.sh' {{server_name02}}"
+  register: srv2_start
+  changed_when: srv2_start.rc == 0

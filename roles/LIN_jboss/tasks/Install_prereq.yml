@@ -1,0 +1,61 @@
+
+- name: Check if Jboss is already installed
+  stat:
+    path: "{{ jboss_app_dir }}/jboss/bin/standalone.sh"
+  register: is_installed
+
+- name: Install OpenJDK
+  zypper:
+    name: '{{ java_package }}'
+    state: latest
+  when:  not is_installed.stat.exists and  ansible_os_family == "Suse" 
+
+- name: Install OpenJDK
+  yum:
+    name: '{{ rhel_java_package }}'
+    state: latest
+  when:  not is_installed.stat.exists and  ansible_os_family == "RedHat"
+
+- name: create jboss group
+  group:
+    name: '{{ jboss_grp }}'
+    gid: '{{jboss_gid}}'
+    system: true
+    state: present
+
+- name: create jboss user
+  user:
+    name: '{{ jboss_user }}'
+    group: '{{ jboss_grp }}'
+    uid: '{{jboss_uid}}'
+    createhome: true
+    state: present
+    system: true
+
+- name: Unarchive {{jboss_installer}} at {{ jboss_app_dir }}
+  unarchive:
+    src: "{{jboss_app_src}}/{{jboss_installer}}"
+    dest: "{{ jboss_app_dir }}"
+    remote_src: True
+    owner: "{{ jboss_user }}"
+    group: "{{ jboss_grp }}"
+    creates: "{{ jboss_app_dir }}/jboss/bin/standalone.sh"
+  register: jboss_package_extracted
+  when: not is_installed.stat.exists
+
+- name: Move extracted dir to jboss
+  shell: "mv {{jboss_app_dir}}/jboss-eap-{{jboss_base_version}} {{jboss_app_dir}}/jboss"
+  when: not is_installed.stat.exists
+
+- name: Delete jboss package in Source path
+  file:
+    path: "{{jboss_app_src}}/{{jboss_installer}}"
+    state: absent
+  when: (jboss_package_extracted.changed == true and jboss_package_extracted.extract_results.rc == 0 )
+
+- name: Change permission & ownership for Jboss directory
+  shell: "chown -R jbossadm:jbossgrp {{jboss_app_dir}} && chmod -R 755 {{jboss_app_dir}}"
+
+- name: Change permission & ownership for source directory
+  shell: "chown -R jbossadm:jbossgrp {{jboss_app_src}} && chmod -R 755 {{jboss_app_src}}"
+

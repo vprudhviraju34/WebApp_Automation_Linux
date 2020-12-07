@@ -1,0 +1,50 @@
+- name: 'create scripts directory'
+  file:
+    path: /appl/freeware/apache/scripts
+    state: directory
+    owner: '{{ apache_system_user }}'
+    group: '{{ apache_system_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: 'create scripts log directory'
+  file:
+    path: /appl/freeware/apache/scripts/logs
+    state: directory
+    owner: '{{ apache_system_user }}'
+    group: '{{ apache_system_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy apache log archive script
+  copy:
+    src: templates/apache_log_archive.sh
+    dest: "/appl/freeware/apache/scripts"
+    group: '{{ apache_system_group }}'
+    owner: '{{ apache_system_user }}'
+    mode: '0755'
+    force: yes
+
+- name: Allow "{{ apache_system_user }}" to run crontab
+  block:
+    - blockinfile:
+        path: /etc/cron.allow
+        block: |
+         {{ apache_system_user }}
+    - file:
+        path: /usr/bin/crontab
+        owner: root
+        group: root
+        mode: '4755'
+
+- name: "Cronjob Entry"
+  cron:
+    name: "### Apache log retension policy ###"
+    minute: "59"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: /appl/freeware/apache/scripts/apache_log_archive.sh
+    user: webadm
+

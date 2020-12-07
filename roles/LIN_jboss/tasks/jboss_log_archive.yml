@@ -1,0 +1,50 @@
+- name: 'create CronjobLogs directory'
+  file:
+    path: '{{jboss_scripts_path}}/standalone/log/CronjobLogs'
+    state: directory
+    owner: '{{ jboss_user }}'
+    group: '{{ jboss_grp }}'
+    mode: "0755"
+    recurse: yes
+
+- name: 'create scripts directory'
+  file:
+    path: '{{jboss_scripts_path}}/scripts'
+    state: directory
+    owner: '{{ jboss_user }}'
+    group: '{{ jboss_grp }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy IHS log archive script
+  copy:
+    src: templates/jboss_log_archive.sh
+    dest: '{{jboss_scripts_path}}/scripts'
+    group: '{{ jboss_grp }}'
+    owner: '{{ jboss_user }}'
+    mode: '0755'
+    force: yes
+
+- name: Allow "{{ jboss_user }}" to run crontab
+  block:
+    - blockinfile:
+        path: /etc/cron.allow
+        block: |
+         {{ jboss_user }}
+    - file:
+        path: /usr/bin/crontab
+        owner: root
+        group: root
+        mode: '4755'
+
+- name: "Cronjob Entry"
+  cron:
+    name: "### JBoss log retension policy ###"
+    minute: "59"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: '{{jboss_scripts_path}}/scripts/jboss_log_archive.sh'
+    user: jbossadm
+

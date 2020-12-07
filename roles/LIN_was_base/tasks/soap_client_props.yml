@@ -1,0 +1,16 @@
+
+- name: Changing soap client props username
+  shell: sed -i  '31s/com.ibm.SOAP.loginUserid=/com.ibm.SOAP.loginUserid={{soap_user}}/g' "{{dest_dir}}/profiles/{{app_profile01}}/properties/soap.client.props"
+  register: soap_user_output
+
+- name: Display output
+  debug: var=soap_user_output
+
+- name: Changing soap clinet props pwd
+  shell: sed -i  '32s/com.ibm.SOAP.loginPassword=/com.ibm.SOAP.loginPassword={{soap_pwd}}/g' "{{dest_dir}}/profiles/{{app_profile01}}/properties/soap.client.props" 
+  register: soap_pwd_output
+
+- name: Display output
+  debug: var=soap_pwd_output
+
+

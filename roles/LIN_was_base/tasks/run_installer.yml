@@ -1,0 +1,17 @@
+- name: Extract IBM WAS Archive
+  unarchive:
+   src: '{{appl_src}}/{{ agent_installer }}'
+   dest: "{{opr_dir}}/ibm_im"
+   copy: no
+
+# - name: Install Installation Manager
+#   ibmim_installer:
+#     src: "{{opr_dir}}/ibm_im"
+#   register: run_installer_output
+
+- name: Run Installer
+  shell: "{{opr_dir}}/ibm_im/installc -installationDirectory {{dir_install_mgr}} -log im.log -acceptLicense"
+  register: run_installer_output
+
+- name: Display Output logs
+  debug: var=run_installer_output.msg

@@ -1,0 +1,75 @@
+- name: List Java Packages
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{dir_ibm_sdk}}"
+  register: java_package_list
+
+- debug: var=java_package_list.stdout
+
+- name: Filter Java Repo Name
+  set_fact:
+    java_repo_name: "{{ java_package_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.(websphere|java).(IBMJAVA|jdk).v[0-9]+_[0-9]+.[0-9]+.[0-9]+.[0-9]+_[0-9]*)'
+
+- debug:
+    msg: "{{java_repo_name}}"
+
+- name: List IBM-IHS Packages
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{dir_ibm_ihs}}"
+  register: ibm_ihs_package_list
+
+
+####
+- name: List IBM-IHS RefreshPack Packages
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{dir_ibm_ihs_rp}}"
+  register: ibm_ihs_refreshpack_package_list
+
+####
+####
+- name: List IBM-IHS FixPack Packages
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{dir_ibm_ihs_fp}}"
+  register: ibm_ihs_fixpack_package_list
+
+####
+- name: Set Jave require as false
+  set_fact:
+    is_java_required: false
+
+- name: Get IBM-IHS Parent repo name
+  set_fact:
+    ihs_repo_name: "{{ ibm_ihs_package_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.[aA-zZ]+.IHS.v(8|9)[0-9]_(8|9).[0-9].[0-9]+.[0-9]+_[0-9]+)'
+
+- debug:
+    msg: "{{ihs_repo_name}}"
+
+####
+- name: Get IBM-IHS RefreshPack repo name
+  set_fact:
+    ihs_repo_name_rp: "{{ ibm_ihs_refreshpack_package_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.[aA-zZ]+.IHS.v(8|9)[0-9]_(8|9).[0-9].[0-9]+.[0-9]+_[0-9]+)'
+
+- debug:
+    msg: "{{ihs_repo_name_rp}}"
+
+
+####
+- name: Get IBM-IHS FixPack repo name
+  set_fact:
+    ihs_repo_name_fp: "{{ ibm_ihs_fixpack_package_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.[aA-zZ]+.IHS.v(8|9)[0-9]_(8|9).[0-9].[0-9]+.[0-9]+_[0-9]+)'
+
+- debug:
+    msg: "{{ihs_repo_name_fp}}"
+
+####
+- name: Set flag to use java for IBM-IHS 9.0.5.2
+  set_fact:
+    is_java_required: true
+  when: ibm_ihs_fixpack_package_list.stdout | regex_search('(com.ibm.[aA-zZ]+.IHS.v9[0-9]_9.[0-9].[0-9]+.[0-9]+_[0-9]+)','\\1')
+
+- debug:
+    msg: "Version of IBM-IHS is 9.0.5.2"
+  when: is_java_required

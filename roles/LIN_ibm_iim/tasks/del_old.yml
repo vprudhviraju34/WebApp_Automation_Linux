@@ -1,0 +1,24 @@
+- name: find files
+  find:
+    path: '{{ dir_install_mgr }}'
+    file_type: file
+  register: files
+
+- name: find directories
+  find:
+    path: '{{ dir_install_mgr }}'
+    file_type: directory
+  register: directories
+
+- name: Remove InstallarManager files
+  file:
+    path: '{{ item.path }}'
+    state: absent
+  with_items:
+    - '{{ files.files }}'
+    - '{{ directories.files }}'
+
+# - name: 'Delete old Installation Manager files'
+#   file:
+#     path: '{{dir_install_mgr}}/'
+#     state: absent

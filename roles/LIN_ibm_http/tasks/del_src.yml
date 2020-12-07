@@ -1,0 +1,11 @@
+#- name: Delete Source and Operations files
+#  file:
+#    path: "{{dir_tmp_opr}}/"
+#    state: absent
+
+- name: Delete Source and Operations files
+  shell: rm -rf "/appl/test/*"
+  #shell: rm -rf "{{dir_tmp_src}}"/*
+#file:
+#    path: "/appl/test/"
+#    state: absent

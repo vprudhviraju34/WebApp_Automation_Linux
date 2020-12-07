@@ -1,0 +1,26 @@
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_sdk}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: "Extract IBM Java Archive"
+  unarchive:
+    src: '{{dir_tmp_src}}/{{java_sdk}}'
+    dest: "{{dir_ibm_sdk}}"
+    copy: no
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: Change permission and ownership of directories.
+  file:
+    path: "{{item}}"
+    owner: "{{apache_user}}"
+    group: "{{apache_group}}"
+    recurse: yes
+    state: directory
+  with_items:
+    - "{{dir_plg}}"

@@ -1,0 +1,29 @@
+---
+# Change Permissions for Apache
+
+- name: Change Permissions and ownership of apache directory
+  file:
+    path: '{{ apache_dir }}/apache'
+    owner: '{{ apache_system_user }}'
+    group: '{{ apache_system_group }}'
+    mode: '{{ apache_dir_mode }}'
+    recurse: true
+
+
+- name: Change Permissions and ownership of Source directory
+  file:
+    path: '{{ apache_src }}'
+    owner: '{{ apache_system_user }}'
+    group: '{{ apache_system_group }}'
+    mode: '{{ apache_dir_mode }}'
+    recurse: true
+
+
+- name: Change Permissions and ownership of freeware 
+  file:
+    path: '{{ apache_dir }}'
+    owner: '{{ apache_system_user }}'
+    group: '{{ apache_system_group }}'
+    mode: '{{ apache_dir_mode }}'
+    recurse: true
+

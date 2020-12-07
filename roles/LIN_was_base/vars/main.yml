@@ -1,0 +1,38 @@
+---
+#
+# Variables
+#
+was_adm_user: wasadm
+was_adm_grp: wasgrp
+#was_src: /appl/freeware/tomcat/IBM/WebSphere/
+was_user: wasadmin
+####################
+
+dep_dir: /appl/source
+opr_dir: /appl/source
+appl_src: /appl/source
+dest_dir: /appl/IBM/WebSphere/AppServer
+was_path: /appl/IBM/WebSphere
+dir_install_mgr: /appl/IBM/InstallationManager
+agent_installer: agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip
+ibm_was_installer: was.repo.9000.base.zip
+ibm_was_installer_rp: 9.0.5-WS-WAS-RP.zip
+ibm_was_installer_fp: 9.0.5-WS-WAS-FP006.zip
+java_sdk: ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
+
+#######################################
+
+dcrypt_password: "j2eewas100"
+profile_path: /appl/IBM/WebSphere/AppServer/profiles
+app_profile01: AppSrv01
+server_name01: Server1
+minhs: 2048 
+maxhs: 2048
+
+soap_pwd: "{xor}NW06Oig+LG5vbw=="
+soap_user: "wasadmin"
+
+backupfiles: 30
+rolloverType: "TIME"
+rolloversize: 1
+

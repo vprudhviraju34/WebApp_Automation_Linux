@@ -1,0 +1,12 @@
+- name: check if Apache file exists.
+  stat:
+    path: '{{ apache_dir }}/bin/apachectl'
+  register: apache_extracted
+
+- name: Running apache command
+  shell: |
+        cd /appl/freeware/httpd-2.4.27/
+        ./configure --prefix=/appl/freeware/apache/
+        make
+        make install
+  when: apache_extracted.stat.exists == false

@@ -1,0 +1,5 @@
+{% for item in service_group %}
+{% if item.sudo %}
+%{{ item.name }} ALL=(ALL) NOPASSWD: /bin/su -
+{% endif %}
+{% endfor %}

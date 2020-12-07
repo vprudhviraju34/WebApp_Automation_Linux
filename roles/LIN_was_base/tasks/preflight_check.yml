@@ -1,0 +1,20 @@
+---
+  - name: Ensure /appl/IBM/ exists
+    stat:
+      path: /appl/IBM/
+    register: file_system_appl_IBM_HTTPServer_exists
+
+  - name: Fail the execution if /appl/IBM/ does not exists
+    fail:
+      msg: Failing the execution due to /appl/IBM/ does NOT EXISTS !!
+    when: not file_system_appl_IBM_HTTPServer_exists.stat.exists
+
+  - name: Ensure /appl/source exists
+    stat:
+      path: /appl/source
+    register: file_system_source_exists
+
+  - name: Fail the execution if /appl/source does not exists
+    fail:
+      msg: Failing the execution due to /appl/source does NOT EXISTS !!
+    when: not file_system_source_exists.stat.exists

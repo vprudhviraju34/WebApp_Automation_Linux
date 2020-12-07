@@ -1,0 +1,53 @@
+---
+#
+# Extract Apache
+#
+
+- name: check if Apache file exists.
+  stat:
+    path: '{{ apache_dir }}/apache/bin/apachectl'
+  register: apache_extracted
+
+# Ensure Apache Group and user accounts exists
+- name: create apache group
+  group:
+    name: '{{ apache_system_group }}'
+    system: true
+    state: present
+
+- name: create apache user
+  user:
+    name: '{{ apache_system_user }}'
+    group: '{{ apache_system_group }}'
+    createhome: true
+    state: present
+    system: true
+
+# Create an application directory if it does not exists
+#- name: 'create application directory: {{ apache_dir }}'
+#  file:
+#    path: '{{ apache_dir }}'
+#    owner: '{{ apache_system_user }}'
+#    group: '{{ apache_system_group }}'
+#    mode: '{{ apache_dir_mode }}'
+#    recurse: true
+#    state: directory
+#  when: ( apache_extracted.stat.exists == false )
+
+
+# Extract Apache Archive
+- name: Extract Apache Archive
+  unarchive:
+   src: "{{ apache_src }}/{{ apache_package }}"
+   dest: "{{apache_dir}}"
+  # group: "{{apache_system_group}}"
+  # owner: "{{apache_system_user}}"
+  # mode: '0755'
+   copy: no
+   creates: '{{ apache_dir }}/apache/bin/apachectl'
+  register: apache_package_extracted
+  when: ( apache_extracted.stat.exists == false )
+
+- name: Apache package extracted status
+  debug:
+    var: apache_package_extracted

@@ -1,0 +1,17 @@
+---
+#
+## Default variables for the apache role
+##
+#
+tomcat_dir: /appl/freeware/
+tomcat_src: /appl/source/
+tomcat_package: tomcat.tar.gz
+tomcat_system_user: tomcat
+tomcat_system_group: tomgrp
+tomcat_dir_mode: 0755
+
+tomcat_install_java: True
+#java_package: java-1_8_0-ibm
+java_package: java-1_8_0-openjdk 
+rhel_java_package: java-1.8.0-openjdk 
+#java_home: /usr/lib64/jvm/jre-1.8.0-openjdk

@@ -1,0 +1,22 @@
+
+- name: Running tomcat command
+  shell: /bin/su - tomcat -c "{{tomcat_dir}}/tomcat/bin/startup.sh" 
+
+- name: Verify Tomcat services
+  shell: ps -ef | grep -v grep | grep -i java | grep -i tomcat |wc -l
+  register: pscheck
+
+- name: Verify Tomcat services
+  fail:
+    msg: "Error: Tomcat not successfully installed"
+  when: pscheck.stdout == "0"
+
+- name: Verify Tomcat HTTP Status
+  shell:  curl -vk http://localhost:8080
+  when: pscheck.stdout > "0" 
+  register: tomcatstatuscheck
+
+- name: Tomcat HTTP Status
+  debug:
+    var: tomcatstatuscheck
+

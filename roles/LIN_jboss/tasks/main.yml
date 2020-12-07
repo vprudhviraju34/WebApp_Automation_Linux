@@ -1,0 +1,27 @@
+---
+#
+# Installing JBOSS
+#
+- name: Preflight check
+  include_tasks: preflight_check.yml
+  
+- name: Install Pre-requisites
+  include_tasks: Install_prereq.yml
+
+- name: Export Variables and Run JBOSS
+  include_tasks: standalone_config.yml
+
+- name: creating Jboss start scripts when server reboots
+  include_tasks: jboss_restart.yml
+
+- name: JBoss log archive
+  include_tasks: jboss_log_archive.yml
+
+- name: Changing heap size 
+  include_tasks: heap_size.yml
+
+- name: Start Jboss Service
+  include_tasks: jboss_start.yml
+
+- name: JBoss package removal from source
+  include_tasks: remove_package.yml

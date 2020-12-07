@@ -1,0 +1,76 @@
+
+
+#- name: adding PB team members to PB WebApp group 
+#  command: usermod -aG {{pbgroupname}} {{item}} 
+#  with_items:
+#    - "{{ pbwebapp_ids }}"
+#  register: id_pbgroup
+#
+#- name: Display output
+#  debug: var=id_pbgroup
+#
+- name: to get PB webapp team group id with members
+  command: getent group {{pbgroupname}}
+  register: pb_group_ids
+  ignore_errors: yes
+
+- name: Display output
+  debug: var=pb_group_ids.stdout
+
+- name: PB WebApp group creation
+  command: groupadd {{pbgroupname}}
+  register: pbgroup
+  when: pb_group_ids.rc != 0
+
+- name: Display output
+  debug: var=pbgroup
+
+#- name: adding pbgroup in sudoers file
+#  command: echo "{{item|join(',')}}" >> /appl/file1
+#  with_items:
+#    - "{{ pbwebapp_ids }}"
+
+#- name: adding service account in sudoers file
+#  lineinfile:
+#   path: /etc/sudoers
+#   state: present
+#   regexp: '^webadm\s'
+#   line: 'webadm ALL=(ALL) NOPASSWD: /bin/su -'
+
+- name: adding PBgroup id in sudoers file
+  lineinfile:
+   path: /etc/sudoers
+   state: present
+   regexp: '^%pbwebapp\s'
+   line: '%pbwebapp ALL=NOPASSWD: /bin/su - webadm'
+
+
+- name: Adding group to user
+  command: usermod -aG "{{pbgroupname}}" "{{ username }}"
+#  with_items: "{{ username }}"
+
+
+
+#- name: adding pbgroup in sudoers file
+#  command: echo "{{pbgroupname}} ALL=(ALL) NOPASSWD: /bin/su -" >> /appl/file2
+
+
+#- name: allow pb groups to sudoers
+#  template:
+#    src: sudoers.j2
+#    dest: /appl/sudoers
+#    validate: 'visudo -cf %s'
+#    mode: 0440
+#
+#
+#
+#- name: allow pb groups to sudoers
+#  template:
+#    src: sudoers1.j2
+#    dest: /appl/sudoers
+#    validate: 'visudo -cf %s'
+#    mode: 0440
+
+
+
+

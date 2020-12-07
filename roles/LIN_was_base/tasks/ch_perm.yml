@@ -1,0 +1,17 @@
+
+- name: Change Permissions and ownership of the directories
+  file:
+    path: "{{item}}"
+    owner: "{{ was_adm_user }}"
+    group: "{{ was_adm_grp }}"
+    recurse: yes
+    state: directory
+  with_items: 
+    - "{{dep_dir}}"
+    - "{{was_path}}"
+    - "{{dir_install_mgr}}"    
+
+#- name: Delete WAS extracted directories and files
+#  file:
+#    path: "{{opr_dir}}/"
+#    state: absent

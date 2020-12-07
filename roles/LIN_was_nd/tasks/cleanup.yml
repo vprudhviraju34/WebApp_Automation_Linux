@@ -1,0 +1,36 @@
+---
+- name: Change permission and ownership of WAS directories
+  file: 
+    state: directory
+    path: "{{item}}"
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+  with_items:
+    - "{{was_root}}"
+    - "{{dir_was_path}}"
+    #- "{{was_path}}"
+ #   - "{{was_tmp}}"
+    - "{{iim_path}}"
+#    - "{{iim_repo}}"
+
+
+- name: Clean IIM repo
+  file:
+    state: absent
+    path: "{{ iim_repo }}"
+
+- name: Clean WAS repo
+  file:
+    state: absent
+    path: "{{ was_repo }}"
+
+- name: Clean sdk repo
+  file:
+    state: absent
+    path: "{{ sdk_repo }}"
+
+- name: Clean password Repo
+  file:
+    state: absent
+    path: "{{ pass_repo }}"

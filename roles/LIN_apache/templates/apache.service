@@ -1,0 +1,15 @@
+[Unit]
+Description=Apache WebServer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/apache.sh start
+ExecStop=/usr/local/sbin/apache.sh stop
+ExecRestart=/usr/local/sbin/apache.sh restart
+
+User=root
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
+

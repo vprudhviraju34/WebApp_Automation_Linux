@@ -1,0 +1,71 @@
+- name: pausing for 10 seconds
+  pause:
+    seconds: 10
+
+- name: changing user in httpd.conf
+  replace:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    regexp: 'User nobody'
+    replace: 'User {{apache_user}}'
+
+- name: changing group in httpd.conf file
+  replace:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    regexp: 'Group nobody'
+    replace: 'Group {{apache_group}}'
+
+- name: changing port in httpd.conf file
+  replace:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    regexp: 'Listen 80'
+    replace: 'Listen {{apache_port}}'
+
+- name: Commenting existing error log line
+  replace:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    regexp: 'ErrorLog logs/error_log'
+    replace: '#ErrorLog logs/error_log'
+
+- name: Adding Error Log path with auto rotation on daily basis
+  lineinfile:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    line: 'ErrorLog "|bin/rotatelogs /appl/IBM/HTTPServer/logs/error.log.%Y-%m-%d 86400"'
+    insertafter: '#ErrorLog logs/error_log'
+
+- name: Commenting existing access log line
+  replace:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    regexp: 'CustomLog logs/access_log common'
+    replace: '#CustomLog logs/access_log common'
+
+- name: Adding Access Log path with auto rotation on daily basis
+  lineinfile:
+    path: "{{ dir_app_http }}/conf/httpd.conf"
+    line: 'CustomLog "|bin/rotatelogs /appl/IBM/HTTPServer/logs/access.log.%Y-%m-%d 86400" common'
+    insertafter: '#CustomLog logs/access_log common'
+
+- name: Change permission for IBM directory
+  shell: "chown -R webadm:webgrp {{dir_app_http}} && chmod -R 755 {{dir_app_http}}"
+
+- name: "Start IHS" 
+  shell: |
+    /bin/su - webadm -c "{{dir_app_http}}/bin/apachectl -k start"
+    exit 0
+  register: startApache
+
+- name: Change permission for IBM directory
+  shell: "chown -R webadm:webgrp {{dir_app_http}} && chmod -R 755 {{dir_app_http}}"
+  
+- name: Check installation if exists
+  shell: |
+     {{dir_install_mgr}}/eclipse/tools/imcl listInstalledPackages | wc -l
+     exit 0
+  register: pscheck
+
+- name: Display output
+  debug: var=pscheck.stdout
+
+- name: Failing the playbook because installation does not exists
+  fail:
+    msg: "Error: Webserver not successfully installed"
+  when: pscheck.stdout < "3"

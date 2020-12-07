@@ -1,0 +1,39 @@
+
+- name: 'create AutoStartupLogs directory'
+  file:
+    path: /appl/freeware/tomcat/logs/AutoStartupLogs
+    state: directory
+    owner: '{{ tomcat_system_user }}'
+    group: '{{ tomcat_system_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy tomcat start script
+  copy: 
+    src: templates/tomcat.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+
+- name: Copy Tomcat service script
+  copy:
+    src: templates/tomcat.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+
+- name: enable Tomcat service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable tomcat.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/tomcat.service
+  register: tomcat_enable
+
+- name: Display output
+  debug: var=tomcat_enable.results[2].stdout_lines
+

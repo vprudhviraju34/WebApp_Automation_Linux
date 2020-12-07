@@ -1,0 +1,50 @@
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_plugin}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+        
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_plg_rp}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+- name: 'create directory: '
+  file:
+    path: "{{dir_ibm_plg_fp}}"
+    state: directory
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+    recurse: yes
+
+
+- name: "Extract Plugin Archive:"
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_plugin_installer}}"
+    dest: "{{dir_ibm_plugin}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: "Extract IBM Plugin RefreshPack:"
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_plg_installer_rp}}"
+    dest: "{{dir_ibm_plg_rp}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+
+- name: "Extract IBM Plugin FixPack:"
+  unarchive:
+    src: "{{dir_tmp_src}}/{{ibm_plg_installer_fp}}"
+    dest: "{{dir_ibm_plg_fp}}"
+    remote_src: yes
+    owner: "{{ apache_user }}"
+    group: "{{ apache_group }}"
+

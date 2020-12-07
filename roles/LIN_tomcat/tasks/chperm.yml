@@ -1,0 +1,19 @@
+---
+# Change Permissions for tomcat
+
+- name: Change Permissions and ownership of tomcat directory
+  file:
+    path: '{{ tomcat_dir }}/tomcat'
+    owner: '{{ tomcat_system_user }}'
+    group: '{{ tomcat_system_group }}'
+    mode: '{{ tomcat_dir_mode }}'
+    recurse: true
+
+
+- name: Change Permissions and ownership of Source directory
+  file:
+    path: '{{ tomcat_src }}'
+    owner: '{{ tomcat_system_user }}'
+    group: '{{ tomcat_system_group }}'
+    mode: '{{ tomcat_dir_mode }}'
+    recurse: true

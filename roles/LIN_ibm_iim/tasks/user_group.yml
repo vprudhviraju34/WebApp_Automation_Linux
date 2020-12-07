@@ -1,0 +1,14 @@
+- name: create ibm-was group
+  group:
+    name: '{{ apache_group }}'
+    system: true
+    state: present
+
+- name: create ibm-was user
+  user:
+    name: '{{ apache_user }}'
+    group: '{{ apache_group }}'
+    createhome: true
+    state: present
+    system: true
+

@@ -1,0 +1,30 @@
+---
+
+# Installs Apache
+#- name: access
+#  include_tasks: access.yml
+
+- name: Preflight Checks
+  include_tasks: preflight_check.yml
+
+- name: Extract & Install Apache 
+  include_tasks: extract.yml
+
+- name: Change Permissions
+  include_tasks: chperm.yml
+
+- name: creating Apache start and stop scripts when server reboots 
+  include_tasks: apache_restart.yml
+
+- name: Apache log archive
+  include_tasks: apache_log_archive.yml
+
+- name: install Apache
+  include_tasks: apache_run.yml
+
+- name: Change Permissions
+  include_tasks: chperm.yml
+
+- name: Delete apache package in Source path
+  include_tasks: remove_package.yml
+

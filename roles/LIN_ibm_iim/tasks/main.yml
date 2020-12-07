@@ -1,0 +1,25 @@
+
+- name: pre-requiistes check validation
+  include_tasks: preflight_check.yml
+
+- name: Validate if IIM is already installed or not
+  include_tasks: validate.yml
+
+- name: user and group creation
+  include_tasks: user_group.yml
+
+- name: Create Directory and Extract the installer file
+  include_tasks: extract.yml
+  when: iim_installation_status.stat.exists == false 
+
+- name: Remove if there are any old files
+  include_tasks: del_old.yml
+  when: iim_installation_status.stat.exists == false
+
+- name: Run Installer to accept License
+  include_tasks: accept_lic.yml
+  when: iim_installation_status.stat.exists == false
+
+#- name: Delete Source packages
+#  include_tasks: del_src.yml
+#  when: iim_installation_status.stat.exists == true

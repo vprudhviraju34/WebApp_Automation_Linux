@@ -1,0 +1,5 @@
+{% for item in pbwebapp_group %}
+{% if item.sudo %}
+%{{ item.name }} ALL=NOPASSWD: /bin/su - webadm
+{% endif %}
+{% endfor %}

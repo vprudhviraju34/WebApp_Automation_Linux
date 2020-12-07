@@ -1,0 +1,19 @@
+
+- name: Check status of {{app_profile01}} profile.
+  stat:
+    path: "{{profile_path}}/{{app_profile01}}"
+  register: appsrv01
+
+- name: Create {{app_profile01}} profile.
+  become: true
+  shell: "{{dest_dir}}/bin/manageprofiles.sh -create -profileName {{app_profile01}} -serverName {{server_name01}} -profilePath {{dest_dir}}/profiles/{{app_profile01}} -enableAdminSecurity true -adminUserName {{ was_user }} -adminPassword {{ dcrypt_password }} -templatePath {{dest_dir}}/profileTemplates/default"
+  when: appsrv01.stat.exists == False
+
+
+- name: Change permission for WAS directory
+  shell: "chown -R wasadm:wasgrp /appl/IBM/ && chmod -R 755 /appl/IBM/"
+
+- name: Start Server1
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startServer.sh' {{server_name01}}"
+  register: server_start
+  changed_when: server_start.rc == 0

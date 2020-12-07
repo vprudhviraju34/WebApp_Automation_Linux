@@ -1,0 +1,50 @@
+- name: 'create CronjobLogs directory'
+  file:
+    path: /appl/freeware/tomcat/logs/CronjobLogs
+    state: directory
+    owner: '{{ tomcat_system_user }}'
+    group: '{{ tomcat_system_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: 'create scripts directory'
+  file:
+    path: /appl/freeware/tomcat/scripts
+    state: directory
+    owner: '{{ tomcat_system_user }}'
+    group: '{{ tomcat_system_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy tomcat log archive script
+  copy:
+    src: templates/tomcat_log_archive.sh
+    dest: "/appl/freeware/tomcat/scripts"
+    group: '{{ tomcat_system_group }}'
+    owner: '{{ tomcat_system_user }}'
+    mode: '0755'
+    force: yes
+
+- name: Allow "{{ tomcat_system_user }}" to run crontab
+  block:
+    - blockinfile:
+        path: /etc/cron.allow
+        block: |
+         {{ tomcat_system_user }}
+    - file:
+        path: /usr/bin/crontab
+        owner: root
+        group: root
+        mode: '4755'
+
+- name: "Cronjob Entry"
+  cron:
+    name: "### Tomcat log retension policy ###"
+    minute: "59"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: /appl/freeware/tomcat/scripts/tomcat_log_archive.sh
+    user: tomcat
+

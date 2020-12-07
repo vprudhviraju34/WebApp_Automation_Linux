@@ -1,0 +1,31 @@
+
+- name: Copy WAS Base start script
+  copy: 
+    src: templates/wasbasestart.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+
+- name: Copy WAS Base service script
+  copy:
+    src: templates/wasbasestart.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+
+- name: enable WAS Base service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable wasbasestart.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/wasbasestart.service
+  register: wasbase_enable
+
+- name: Display output
+  debug: var=wasbase_enable.results[2].stdout_lines
+  
+

@@ -1,0 +1,16 @@
+- name: "Accept License"
+  shell: "{{dir_tmp_src}}/ibm_im/installc -installationDirectory {{dir_install_mgr}} -log im.log -acceptLicense"
+  register: output_accpt_lic
+
+- name: Display ouput
+  debug: var=output_accpt_lic.stdout_lines
+
+- name: Change permission and ownership of directories.
+  file:
+    path: "{{item}}"
+    owner: "{{apache_user}}"
+    group: "{{apache_group}}"
+    recurse: yes
+    state: directory
+  with_items:
+    - "{{dir_install_mgr}}"

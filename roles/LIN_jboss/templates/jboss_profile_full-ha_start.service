@@ -1,0 +1,15 @@
+[Unit]
+Description=JBoss Server
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/jboss_profile_full-ha_start.sh start
+ExecStop=/usr/local/sbin/jboss_profile_full-ha_start.sh stop
+ExecRestart=/usr/local/sbin/jboss_profile_full-ha_start.sh restart
+
+User=root
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target
+

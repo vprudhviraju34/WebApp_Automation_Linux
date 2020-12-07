@@ -1,0 +1,46 @@
+---
+#- name: Get server IP address
+#  set_fact:
+#    host_ip_add: '{{ansible_default_ipv4.address}}'
+
+#- name: modify IP address in config files
+#  replace:
+##    path: "{{ jboss_app_dir }}/{{jboss_standalone_config_path}}"
+#    path: "{{ item.path}}"
+#    regexp: "{{ item.regexp1 }}"
+#    replace: "{{ item.replace }}"
+#  with_items:
+#    - { path: '{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/standalone.xml', regexp1:'<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>', replace: '<inet-address value="${jboss.bind.address.management:{{host_ip_add}}}"/>' }
+#    - { path: '{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/standalone.xml', regexp1:'<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>', replace: '<inet-address value="${jboss.bind.address.management:{{host_ip_add}}}"/>' }
+#    - { path: '{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/standalone.xml', regexp1:'<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>', replace: '<inet-address value="${jboss.bind.address.management:{{host_ip_add}}}"/>' }
+#    - { path: '{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/standalone.xml', regexp1:'<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>', replace: '<inet-address value="${jboss.bind.address.management:{{host_ip_add}}}"/>' }
+#
+
+#- name: modify IP for management in config files
+#  replace:
+#    path: "{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/standalone.xml"
+#    regexp: '<inet-address value="${jboss.bind.address.management:127.0.0.1}"/>'
+#    replace: '<inet-address value="${jboss.bind.address.management:{{host_ip_add}}}"/>'
+
+#- name: modify IP for public address in config files
+#  replace:
+#    path: "{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/{{jboss_config_file}}"
+#    regexp: '<inet-address value="${jboss.bind.address:127.0.0.1}"/>'
+#    replace: '<inet-address value="${jboss.bind.address:{{host_ip_add}}}"/>'
+#
+#- name: modify IP for Private address in config files
+#  replace:
+#    path: "{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/{{jboss_config_file}}"
+#    regexp: '<inet-address value="${jboss.bind.address.private:127.0.0.1}"/>'
+#    replace: '<inet-address value="${jboss.bind.address.private:{{host_ip_add}}}"/>'
+#  when: jboss_config_file ==  "standalone-ha.xml" or jboss_config_file == "standalone-full-ha.xml"
+#
+#- name: modify IP for unsecure address in config files
+#  replace:
+#    path: "{{ jboss_app_dir }}/{{jboss_standalone_config_path}}/{{jboss_config_file}}"
+#    regexp: '<inet-address value="${jboss.bind.address.unsecure:127.0.0.1}"/>'
+#    replace: '<inet-address value="${jboss.bind.address.unsecure:{{host_ip_add}}}"/>'
+#  when: jboss_config_file == "standalone-full.xml" or jboss_config_file == "standalone-full-ha.xml"
+#
+
+

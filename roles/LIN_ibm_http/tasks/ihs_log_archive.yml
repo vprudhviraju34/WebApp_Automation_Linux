@@ -1,0 +1,50 @@
+- name: 'create scripts directory'
+  file:
+    path: '{{dir_app_http}}/scripts'
+    state: directory
+    owner: '{{ apache_user }}'
+    group: '{{ apache_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: 'create script log directory'
+  file:
+    path: '{{dir_app_http}}/scripts/logs'
+    state: directory
+    owner: '{{ apache_user }}'
+    group: '{{ apache_group }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy IHS log archive script
+  copy:
+    src: templates/ihs_log_archive.sh
+    dest: '{{dir_app_http}}/scripts'
+    group: '{{ apache_group }}'
+    owner: '{{ apache_user }}'
+    mode: '0755'
+    force: yes
+
+- name: Allow "{{ apache_user }}" to run crontab
+  block:
+    - blockinfile:
+        path: /etc/cron.allow
+        block: |
+         {{ apache_user }}
+    - file:
+        path: /usr/bin/crontab
+        owner: root
+        group: root
+        mode: '4755'
+
+- name: "Cronjob Entry"
+  cron:
+    name: "### IHS log retension policy ###"
+    minute: "59"
+    hour: "23"
+    day: "*"
+    month: "*"
+    weekday: "*"
+    job: '{{dir_app_http}}/scripts/ihs_log_archive.sh'
+    user: webadm
+

@@ -1,0 +1,14 @@
+[Unit]
+Description=IBM HTTPServer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/ihs.sh start
+ExecStop=/usr/local/sbin/ihs.sh stop
+ExecRestart=/usr/local/sbin/ihs.sh restart
+
+User=root
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

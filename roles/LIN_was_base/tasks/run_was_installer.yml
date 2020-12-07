@@ -1,0 +1,36 @@
+
+# com.ibm.websphere.BASE.v85_8.5.5000.20130514_1044
+
+- name: Run Installer for IBM-WAS 8.x.x
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl install {{was_repo_name}} -repositories {{opr_dir}}/was/ -installationDirectory {{dest_dir}} -acceptLicense -showprogress"
+  when: not is_java_required
+  register: was_installer_output
+
+#- name: Run Installer for IBM-WAS 9.x.x
+#  shell: "{{dir_install_mgr}}/eclipse/tools/imcl install {{java_repo_name[0]}} {{was_repo_name}} -repositories {{opr_dir}}/ibmsdk,{{opr_dir}}/was -installationDirectory {{dest_dir}} -acceptLicense -showprogress"
+#  when: is_java_required
+#  register: was_installer_output
+
+# - name: Run Installer for IBM-WAS 9.x.x
+#   shell: "{{dir_install_mgr}}/eclipse/tools/imcl install {{java_repo_name[0]}} {{was_fp_repo_name[0]}} -repositories {{opr_dir}}/ibmsdk,{{opr_dir}}/was,{{opr_dir}}/was-FP -installationDirectory {{dest_dir}} -acceptLicense -showprogress"
+#   when: is_java_required
+#   register: was_installer_output
+
+- name: Install IBM WAS 9.x.x
+  ibmim:
+    state: present
+    ibmim: "{{dir_install_mgr}}"
+    id: ["{{java_repo_name[0]}}","{{was_fp_repo_name[0]}}"]
+    was_id: "{{was_fp_repo_name[0]}}"
+    dest: "{{dest_dir}}"
+    repositories: ["{{opr_dir}}/ibmsdk","{{opr_dir}}/was","{{opr_dir}}/was-RP","{{opr_dir}}/was-FP"]
+  when: is_java_required
+  register: was_installer_output
+
+- name: Display Output
+  debug: var=was_installer_output.msg
+
+# - name: "Delete was files"
+#   file:
+#     path: '{{appl_src}}/{{ibm_was_installer}}'
+#     state: absent

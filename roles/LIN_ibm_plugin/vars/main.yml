@@ -1,0 +1,28 @@
+---
+#
+# Variables
+#######
+apache_user: webadm
+apache_group: webgrp
+apache_port: 8010
+mount_point: /appl/IBM
+#######
+ibm_plugin_installer: was.repo.9000.plugins.zip
+java_sdk: ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
+#opr_dir: /appl/source
+#dir_tmp_opr: /appl/source
+dir_tmp_src: /appl/source
+dir_ibm_ihs: /appl/source/ihs
+dir_ibm_plugin: /appl/source/Plugins
+dir_ibm_sdk: /appl/source/ibmsdk
+dir_dest_plugin: /appl/IBM/WebSphere/Plugins
+dir_plg: /appl/IBM/WebSphere
+dir_install_mgr: /appl/IBM/InstallationManager
+###############################
+
+ibm_plg_installer_fp: 9.0.5-WS-IHSPLG-FP006.zip
+ibm_plg_installer_rp: 9.0.5-WS-IHSPLG-RP.zip
+dir_ibm_plg_fp: /appl/source/plg_fp
+dir_ibm_plg_rp: /appl/source/plg_rp
+
+###############################

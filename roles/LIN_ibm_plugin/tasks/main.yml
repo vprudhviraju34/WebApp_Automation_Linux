@@ -1,0 +1,26 @@
+- name: Validate if Plugin is already configured or not
+  include_tasks: validate.yml
+
+- name: Create directory and Extract plugin file
+  include_tasks: extract_plugin.yml
+  when: plugin_status.stat.exists == false
+
+- name: Extract IBM SDK
+  include_tasks: extract_sdk.yml
+  when: plugin_status.stat.exists == false
+
+- name: List avilable Packages
+  include_tasks: list_package.yml
+  when: plugin_status.stat.exists == false
+
+- name: Delete Old HTTP files and Run Installer
+  include_tasks: configure.yml
+  when: plugin_status.stat.exists == false
+
+- name: Change Ownership of the HTTP folder and Start apache_run
+  include_tasks: configure_http.yml
+  when: plugin_status.stat.exists == false
+
+#- name: Remove Plugin and Source Temporary Directory
+#  include_tasks: del_src.yml
+#  when: plugin_status.stat.exists == false

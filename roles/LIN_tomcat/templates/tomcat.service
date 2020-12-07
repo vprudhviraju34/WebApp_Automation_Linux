@@ -1,0 +1,14 @@
+[Unit]
+Description=Tomcat Application Server
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/tomcat.sh start
+ExecStop=/usr/local/sbin/tomcat.sh stop
+ExecRestart=/usr/local/sbin/tomcat.sh restart
+
+User=root
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

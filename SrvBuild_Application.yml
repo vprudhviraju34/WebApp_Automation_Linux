@@ -1,0 +1,49 @@
+---
+- name: Register Host Dynamic Inventory
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Adding hosts
+      add_host:
+        hostname: "{{item}}"
+        groupname: myhosts
+      with_items: "{{myhost}}"
+
+- hosts: myhosts
+  become: yes
+  roles:
+    - role: LIN_apache
+      when:
+        - application == "LIN_apache"
+
+    - role: LIN_tomcat
+      when:
+        - application == "LIN_tomcat"
+
+    - role: LIN_jboss
+      when:
+        - application == "LIN_jboss"
+
+    - role: LIN_was_base
+      when:
+        - application == "LIN_was_base"
+
+    - role: LIN_was_nd
+      when:
+        - application == "LIN_was_nd"
+
+    - role: LIN_ibm_iim 
+      when:
+        - application == "LIN_ibm_http"
+
+    - role: LIN_ibm_http
+      when:
+        - application == "LIN_ibm_http"
+
+    - role: LIN_ibm_plugin
+      when:
+        - application == "LIN_ibm_http"
+
+    - role: LIN_ibm_wct
+      when:
+        - application == "LIN_ibm_http"

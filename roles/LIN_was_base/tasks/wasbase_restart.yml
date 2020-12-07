@@ -1,0 +1,40 @@
+
+- name: 'create AutoStartupLogs directory'
+  file:
+    path: '{{profile_path}}/{{app_profile01}}/logs/AutoStartupLogs'
+    state: directory
+    owner: '{{ was_adm_user }}'
+    group: '{{ was_adm_grp }}'
+    mode: "0755"
+    recurse: yes
+
+- name: Copy WAS Base start script
+  copy: 
+    src: templates/wasBase.sh
+    dest: "/usr/local/sbin/"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+
+- name: Copy WAS Base service script
+  copy:
+    src: templates/wasBase.service
+    dest: "/etc/systemd/system"
+    group: root
+    owner: root
+    mode: '0755'
+    force: yes
+
+- name: enable WAS Base service
+  command: "{{item}}"
+  with_items:
+    - systemctl enable wasBase.service
+    - systemctl daemon-reload
+    - ls -lrt /etc/systemd/system/default.target.wants/wasBase.service
+  register: wasbase_enable
+
+- name: Display output
+  debug: var=wasbase_enable.results[2].stdout_lines
+  
+

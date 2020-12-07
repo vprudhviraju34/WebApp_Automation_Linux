@@ -1,0 +1,93 @@
+- name: "create directory: "
+  file:
+    path: "{{opr_dir}}/was"
+    state: directory
+
+- name: "Extract IBM-WAS Archive"
+  unarchive:
+   src: '{{appl_src}}/{{ ibm_was_installer }}'
+   dest: "{{opr_dir}}/was"
+   copy: no
+
+- name: "create directory: "
+  file:
+    path: "{{opr_dir}}/ibmsdk"
+    state: directory
+
+- name: "Extract IBM-WAS Archive"
+  unarchive:
+   src: '{{appl_src}}/{{ java_sdk }}'
+   dest: "{{opr_dir}}/ibmsdk"
+   copy: no
+
+- name: "create directory: "
+  file:
+    path: "{{opr_dir}}/was-RP"
+    state: directory
+
+- name: "Extract IBM-WAS FixPack Archive"
+  unarchive:
+   src: '{{appl_src}}/{{ibm_was_installer_rp}}'
+   dest: "{{opr_dir}}/was-RP"
+   copy: no
+
+#####
+- name: "create directory: "
+  file:
+    path: "{{opr_dir}}/was-FP"
+    state: directory
+
+- name: "Extract IBM-WAS FixPack Archive"
+  unarchive:
+   src: '{{appl_src}}/{{ibm_was_installer_fp}}'
+   dest: "{{opr_dir}}/was-FP"
+   copy: no
+#####
+- name: "List Java Packages"
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{opr_dir}}/ibmsdk"
+  register: java_package_list
+
+- debug: var=java_package_list.stdout
+
+- name: Filter Java Repo Name
+  set_fact:
+    java_repo_name: "{{ java_package_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.(websphere|java).(IBMJAVA|jdk).v[0-9]+_[0-9]+.[0-9]+.[0-9]+.[0-9]+_[0-9]*)'
+
+- debug:
+    msg: "{{java_repo_name}}"
+
+- name: "List WAS Packages"
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{opr_dir}}/was/"
+  register: was_package_list
+
+- name: Set the variable
+  set_fact:
+    was_repo_name: "{{was_package_list.stdout}}"
+    is_java_required: false
+#######
+- name: "List WAS FixPack Packages"
+  shell: "{{dir_install_mgr}}/eclipse/tools/imcl listAvailablepackages -repositories {{opr_dir}}/was-FP/"
+  register: was_fp_package_list
+
+- name: Set the variable
+  set_fact:
+    was_fp_repo_name: "{{ was_fp_package_list.stdout | regex_search(regexp,'\\1') }}"
+  vars:
+    regexp: '(com.ibm.[aA-zZ]+.BASE.v9[0-9]_9.[0-9].[0-9]+.[0-9]+_[0-9]+)'
+- debug:
+    msg: "{{was_fp_repo_name}}"
+#######
+- name: Set flag to use java for IBM-WAS 9.0.5.4
+  set_fact:
+    is_java_required: true
+  when: was_fp_package_list.stdout | regex_search('(com.ibm.[aA-zZ]+.BASE.v9[0-9]_9.[0-9].[0-9]+.[0-9]+_[0-9]+)','\\1')
+
+- debug:
+    msg: "Version of IBM-WAS is 9.0.5.4"
+  when: is_java_required
+
+- name: Output the package name
+  debug:
+    msg: "WAS-FP-REPO Name: {{ was_fp_repo_name }}  Java Repo Name: {{ java_repo_name }}"

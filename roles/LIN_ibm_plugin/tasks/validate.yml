@@ -1,0 +1,8 @@
+- name: Validate if Plugin is already installed and present
+  stat: path="{{dir_dest_plugin}}/bin/versionInfo.sh"
+  register: plugin_status
+
+- debug:
+    msg: "Plugin is installed here"
+  when: plugin_status.stat.exists == true
+

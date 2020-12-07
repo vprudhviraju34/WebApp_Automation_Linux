@@ -1,0 +1,14 @@
+
+
+- name: Stop Server1
+  shell: /bin/su - wasadm -c " '{{ profile_path }}/{{ app_profile01 }}/bin/stopServer.sh' {{server_name01}} -username {{ was_user }} -password {{ dcrypt_password }}"
+  register: server_stop
+  changed_when: server_stop.rc == 0
+
+- name: Change permission for WAS directory
+  shell: "chown -R wasadm:wasgrp /appl/IBM/ && chmod -R 755 /appl/IBM/"
+
+- name: Start Server1
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startServer.sh' {{server_name01}}"
+  register: server_restart
+  changed_when: server_restart.rc == 0
