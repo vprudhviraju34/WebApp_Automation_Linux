@@ -7,14 +7,14 @@ Ansible playbook for IBM WebSphere Application Server installation and two nodes
 
 | Playbook name      | Description                                                           |
 | ------------------ | --------------------------------------------------------------------- |
-| playbook-wasnd.yml | Install IBM WebSphere Application Server - Network Deployment - 8.5.5 |
+| playbook-wasnd.yml | Install IBM WebSphere Application Server - Network Deployment - 9.0.5 |
 
 # Roles
 
 | Role name          | Description of Role                                                   |
 | -------------------| --------------------------------------------------------------------- |
 | ansible-role-suse-ibm-wasnd-cluster | Install IBM Installation Manager                     |
-                     | Install IBM WebSphere Application Server - Network Deployment - 8.5.5 |
+                     | Install IBM WebSphere Application Server - Network Deployment - 9.0.5 |
                      | Create a profile for Deployment Manager                               |
                      | Create profiles for WAS Servers                                       |
                      | Federate Nodes with Dmgr                                              |
@@ -79,3 +79,19 @@ ansible-playbook --extra-vars='{"myhost": ['10.30.221.153', '10.30.221.154']}'  
 # License
 
 This playbook is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+License
+-------
+
+MIT/ BSD
+Diamler
+
+Author Information
+------------------
+
+This role was created by ITT APAC Webapp team
+
+Support
+-------
+
+In case of support - please contact Webapp team at dwa_128-iti_webappteam_npm-editor@daimler.com
