@@ -3,15 +3,6 @@
   shell: "kill -9 `pidof java`"
   ignore_errors: yes
 
-- name: Give privilege to wasadm user
-  lineinfile: 
-    path: "/etc/sudoers"
-    line: "wasadm ALL=(ALL) NOPASSWD:ALL"
-    insertafter: EOF
-    regexp: "^#?wasadm"
-    state: present
-    backup: yes
-
 - name: Change permission for WAS directory
   shell: "chown -R wasadm:wasgrp /appl/IBM/ && chmod -R 755 /appl/IBM/"
 

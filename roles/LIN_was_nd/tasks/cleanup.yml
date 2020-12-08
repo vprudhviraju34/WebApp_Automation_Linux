@@ -1,6 +1,7 @@
 ---
+
 - name: Change permission and ownership of WAS directories
-  file: 
+  file:
     state: directory
     path: "{{item}}"
     owner: "{{was_user}}"

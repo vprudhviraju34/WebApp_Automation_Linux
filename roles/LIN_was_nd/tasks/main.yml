@@ -26,9 +26,9 @@
   include_tasks: setup_first_node.yml
   when: ansible_play_hosts.index(inventory_hostname) == 0
 
-###- name: "Setup second node"
-###  include_tasks: setup_second_node.yml
-###  when: ansible_play_hosts.index(inventory_hostname) == 1
+#- name: "Setup second node"
+#  include_tasks: setup_second_node.yml
+#  when: ansible_play_hosts.index(inventory_hostname) == 1
 
 - name: "Cleanup directories"
   include_tasks: cleanup.yml
@@ -37,6 +37,7 @@
   include_tasks: stop_start_node1.yml
   when: ansible_play_hosts.index(inventory_hostname) == 0
 
-###- name: "Kill java and restart Nodeagent/Server on second node"
-###  include_tasks: stop_start_node2.yml
-###  when: ansible_play_hosts.index(inventory_hostname) == 1
+#- name: "Kill java and restart Nodeagent/Server on second node"
+#  include_tasks: stop_start_node2.yml
+#  when: ansible_play_hosts.index(inventory_hostname) == 1
+#

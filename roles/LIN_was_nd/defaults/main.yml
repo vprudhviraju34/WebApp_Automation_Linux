@@ -11,11 +11,10 @@ was_mode: "0755"
 was_user: "wasadm"
 was_grp: "wasgrp"
 was_adm_user: "wasadmin"
-was_adm_pwd: "{xor}NW06Oig+LG5vbw=="
 dcrypt_password: "{{ hostvars[myhost[0]].dcry_password }}"
-
+mount_point: /appl/IBM/
 pass_repo: "/var/pass.sh"
-mount_point: "/appl/IBM"
+
 iim_path: "/appl/IBM/InstallationManager"
 iim_repo: "{{ was_root }}/ibm_im" #Used for extracting agent_installer.
 iim_src_file: "agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip"
@@ -24,10 +23,10 @@ sdk_repo: "{{ was_root}}/ibmsdk"
 sdk_src_file: ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
 
 was_src_file: "WAS_ND_V9.0_MP_ML.zip"
-was_src_file_fp: "9.0.5-WS-WAS-FP006.zip"    ## added for wasND Fixpack by Tom
+was_src_file_fp: "9.0.5-WS-WAS-FP006.zip"
 was_src_file_rp: "9.0.5-WS-WAS-RP.zip"
 was_repo: "{{ was_root }}/WASND/"
-was_repo_fp: "{{ was_root }}/WASND-FP/"      ## added for wasND Fixpack by Tom
+was_repo_fp: "{{ was_root }}/WASND-FP/"      
 was_repo_rp: "{{ was_root }}/WASND-RP/"
 # was_repo1: "{{ was_repo }}/WASND_v8.5.5_Binaries/"
 # was_imcl_package_name: "com.ibm.websphere.ND.v85_8.5.5000.20130514_1044"
@@ -38,25 +37,11 @@ server_name01: 'Server1'
 server_name02: 'Server2'
 app_profile01: 'AppSrv01'
 app_profile02: 'AppSrv02'
-
+wasadm_uid: 10010
+wasadm_gid: 10010
 cluster_name: 'cluster01'
 #member_name01: '{{ ansible_hostname }}'
 #member_name02: '{{ ansible_hostname }}'
-
-wasadm_uid: 10010
-wasadm_gid: 10010
-
-was_files:
-  - agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip
-  - WAS_ND_V9.0_MP_ML.zip
-  - 9.0.5-WS-WAS-RP.zip
-  - 9.0.5-WS-WAS-FP006.zip
-  - ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
-  - ibm_im
-  - ibmsdk
-  - WASND
-  - WASND-FP
-  - WASND-RP
 
 required_vars:
   - was_root
@@ -80,3 +65,19 @@ required_vars:
   - cluster_name
 #  - member_name01
 #  - member_name02
+
+was_files:
+  - agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip
+  - WAS_ND_V9.0_MP_ML.zip
+  - 9.0.5-WS-WAS-RP.zip
+  - 9.0.5-WS-WAS-FP006.zip
+  - ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
+  - ibm_im
+  - ibmsdk
+  - WASND
+  - WASND-FP
+  - WASND-RP
+
+
+
+
