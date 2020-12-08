@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Installs and configures Tomcat server on SUSE Servers.
+Installs and configures Tomcat server on SUSE & RHEL Servers.
 
 Requirements
 ------------
