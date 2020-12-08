@@ -9,7 +9,7 @@ No special requirements; note that this role requires root access,
 
 Tested on Operating System
 --------------------------
-SUSE-12-SP-3
+SUSE-12-SP-5 & RHEL
 
 Role Variables
 --------------
@@ -18,7 +18,7 @@ Role Variables
 
 | Variable Name | Default Value | Internal/Parameter | Comments |
 |---------------|---------------|-----------------|----------------|
-| apache_src | /home/webadm/_Source/apache.tar.gz | Parameter | This variable need to be updated in the defaults/main.yml file |
+| apache_src | /appl/source/apache.tar.gz | Parameter | This variable need to be updated in the defaults/main.yml file |
 
 * Note: The variables that are of "Variable Type=Parameter" they are needed to be passed in form of EXTRA-VARS in TOWER REST API calls or in the EXTRA-VARIABLES section ANSIBLE TOWER >> TEMPLATES >> EXTRA-VARIABLES
 * Note: the "myhost" variable should be passed as list in the EXTRA-VARS section on the Anisble Tower under Template. For example as below:
