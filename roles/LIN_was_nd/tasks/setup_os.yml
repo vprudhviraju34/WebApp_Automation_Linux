@@ -5,26 +5,5 @@
     state: present
   when: ansible_os_family == "Suse"
 
-- block:
-    - set_fact:
-        binary_wasnd: "{{ dev_binary_wasnd }}"
-      when: BinaryDiskEnvironment == 'Dev'
-
-    - set_fact:
-        binary_wasnd: "{{ uat_binary_wasnd }}"
-      when: BinaryDiskEnvironment == 'UAT'
-
-    - set_fact:
-        binary_wasnd: "{{ prod_binary_wasnd }}"
-      when: BinaryDiskEnvironment == 'Prod'
-
-- name: Copy the binaries
-  become: true
-  copy:
-    src: '{{ binary_wasnd }}/{{ item }}'
-    dest: '{{ was_root }}'
-    remote_src: yes
-  with_items:
-    - "{{ was_files }}"
 
 
