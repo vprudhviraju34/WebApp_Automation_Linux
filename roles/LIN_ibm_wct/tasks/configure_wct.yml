@@ -96,6 +96,8 @@
     state: directory
   with_items:
     - "{{dir_wct}}"
+    - "{{dir_tmp_src}}"
+    - "{{mount_point}}"
 
 ####################
 

@@ -2,7 +2,7 @@
 
 - name: deleting binaries from source path
   file:
-    path: "{{dir_tmp_src}}{{item}}"
+    path: "{{dir_tmp_src}}/{{item}}"
     state: absent
   with_items:
     - "{{ ihs_files }}"

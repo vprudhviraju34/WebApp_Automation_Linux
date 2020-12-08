@@ -9,6 +9,7 @@
   with_items:
     - "{{was_root}}"
     - "{{dir_was_path}}"
+    - "{{mount_point}}"
     #- "{{was_path}}"
  #   - "{{was_tmp}}"
     - "{{iim_path}}"
