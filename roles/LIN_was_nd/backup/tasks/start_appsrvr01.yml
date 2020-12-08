@@ -1,0 +1,23 @@
+---
+- name:          "Is Appserver Running on first node?"
+  shell:         "ps -p `cat '{{ profile_path }}/{{ app_profile01 }}/logs/{{ server_name01 }}/{{ server_name01 }}.pid'` > /dev/null"
+  register:      Appserver_is_running
+  ignore_errors: true
+
+- name:          "Start Appserver on first node"
+  command:       "{{ profile_path }}/{{ app_profile01 }}/bin/startServer.sh {{ server_name01 }}"
+  register:      Appserver_start
+  changed_when:  Appserver_start.rc == 0
+  failed_when:   Appserver_start.rc != 0
+  when:          Appserver_is_running.rc != 0
+
+- name:          "Is Appserver Running on first node?"
+  shell:         "ps -p `cat '{{ profile_path }}/{{ app_profile01 }}/logs/{{ server_name01 }}/{{ server_name01 }}.pid'` > /dev/null"
+  register:      Appserver_start
+  ignore_errors: true
+  when:          (Appserver_start.rc is defined) and (Appserver_start.rc == 0)
+
+- name:          Wait 60 seconds for AppServer to activate
+  pause:
+    seconds:     60
+  when:          (Appserver_start.rc is defined) and (Appserver_start.rc == 0)

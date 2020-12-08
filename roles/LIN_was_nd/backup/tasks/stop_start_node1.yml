@@ -1,0 +1,25 @@
+---
+- name: Kill all java process in node1
+  shell: "kill -9 `pidof java`"
+  ignore_errors: yes
+
+- name: Change permission for WAS directory
+  shell: "chown -R wasadm:wasgrp {{mount_point}} && chmod -R 755 {{mount_point}}"
+
+- name: Change permission for WAS directory
+  shell: "chown -R wasadm:wasgrp {{was_src}} && chmod -R 755 {{was_src}}"
+
+- name: Start Dmgr
+  shell: "su wasadm '{{ profile_path }}/{{ dmgr_profile }}/bin/startManager.sh'"
+  register: dm_start
+  changed_when: dm_start.rc == 0
+
+- name: Start Nodeagent1
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startNode.sh'"
+  register: node_start
+  changed_when: node_start.rc == 0
+
+- name: Start Server1
+  shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startServer.sh' {{server_name01}}"
+  register: srv_start
+  changed_when: srv_start.rc == 0

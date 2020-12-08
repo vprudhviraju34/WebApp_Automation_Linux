@@ -1,0 +1,6 @@
+---
+
+- name: Executing Installation Manager
+  shell: "{{iim_repo}}/installc -acceptLicense -installationDirectory {{iim_path}} -log {{ was_tmp }}/im.log"
+  register: cout
+  changed_when: (cout.stdout.find('Installed com.ibm.cic.agent') != -1)

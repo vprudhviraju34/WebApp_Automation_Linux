@@ -1,0 +1,4 @@
+---
+- name: get first node name
+  shell: "grep 'Node name:' '{{ profile_path }}/{{ app_profile01 }}/logs/AboutThisProfile.txt' |cut -d: -f 2 | tr -d ' '"
+  register: first_cluster_node

@@ -1,0 +1,4 @@
+AdminTask.createCluster('[-clusterConfig [-clusterName "{{ cluster_name }}"] -replicationDomain [-createDomain true]]')
+AdminTask.createClusterMember('[-clusterName "{{ cluster_name }}" -memberConfig [-memberNode "{{ first_cluster_node.stdout }}" -memberName "{{ ansible_hostname }}{{ server_name01 }}" -memberWeight 2 -replicatorEntry true]]')
+AdminConfig.save()
+AdminNodeManagement.syncActiveNodes()

@@ -1,0 +1,27 @@
+---
+- name: Set timestamp
+  set_fact:
+    timestamp: "{{ lookup('pipe', 'date +%Y%m%d%H%M%S') }}"
+
+- name: Set jython template as cluster.jython
+  set_fact:
+    jython_template: cluster02.jython
+
+- name: Copying jython script based on template {{ jython_template }}
+  become: true
+  template:
+    src: "{{ jython_template }}"
+    dest: "{{ was_tmp }}/{{ jython_template }}.{{ timestamp }}.jy"
+  changed_when: false
+  when: jython_template is defined
+
+- name: Running jython script {{ was_tmp }}/{{ jython_template }}.{{ timestamp }}.jy
+  become: true
+  command:
+    "{{ was_path }}/bin/wsadmin.sh -lang jython -user {{ was_adm_user }} -password {{ dcrypt_password }} -f '{{ was_tmp }}/{{ jython_template }}.{{ timestamp }}.jy'"
+  when: jython_template is defined
+
+- name:          Activating WAS cluster
+  pause:
+    seconds:     120
+

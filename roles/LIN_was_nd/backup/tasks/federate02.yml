@@ -1,0 +1,26 @@
+---
+
+# - name: copy pass
+#   become: true
+#   template:
+#     src: pass.sh.j2
+#     dest: /tmp/pass.sh
+#     mode: 0775
+# 
+# - name: Run Password Decrypt
+#   command: '/tmp/pass.sh'
+#   register: artifactid
+# - debug: msg="{{ artifactid.stdout }}"
+#   register: msg
+
+- name: Check second node federation status
+  stat:
+    path: "{{ profile_path }}/{{ app_profile02 }}/config/cells/plugin-cfg.xml"
+  register: node02
+
+- name: Federating second node with Dmgr
+  become: true
+  command:
+    "{{ profile_path }}/{{ app_profile02 }}/bin/addNode.sh {{ play_hosts | first }} 8879 -conntype soap -profileName {{ app_profile02 }} -username {{ was_adm_user }} -password {{ dcrypt_password }}"
+  when: not node02.stat.exists
+

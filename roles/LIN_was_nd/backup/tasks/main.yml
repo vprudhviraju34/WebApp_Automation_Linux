@@ -41,5 +41,3 @@
 #  include_tasks: stop_start_node2.yml
 #  when: ansible_play_hosts.index(inventory_hostname) == 1
 #
-- name: Removing of /infra_automation
-  include_tasks: umount.yml

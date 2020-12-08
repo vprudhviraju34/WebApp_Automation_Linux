@@ -1,0 +1,23 @@
+---
+- name: Check dmgr profile installation status
+  stat: 
+    path: "{{ profile_path }}/{{ dmgr_profile }}"
+  register: dmgr
+
+- name: Create dmgr profile
+  become: true
+  command: "{{ was_path }}/bin/manageprofiles.sh -create -profileName {{ dmgr_profile }} -profilePath {{ was_path }}/profiles/{{ dmgr_profile }} -templatePath {{ was_path }}/profileTemplates/dmgr -nodeName '{{ ansible_hostname }}CellManager01'  -cellName '{{ ansible_hostname }}Cell01' -hostName {{ ansible_hostname }} -enableAdminSecurity true -adminUserName {{ was_adm_user }} -adminPassword {{ was_adm_pwd }} -sP -log {{ was_tmp }}/Dmgrcreation.log"
+  when: dmgr.stat.exists == False
+  ignore_errors: true
+
+- name: Check {{ app_profile01 }} profile installation status on first node
+  stat:
+    path: "{{ profile_path }}/{{ app_profile01 }}"
+  register: appsrv01
+
+- name: Create {{ app_profile01 }} profile on first node
+  become: true
+  command:
+    "{{ was_path }}/bin/manageprofiles.sh -create -profileName {{ app_profile01 }} -serverName {{ server_name01 }} -profilePath {{ was_path }}/profiles/{{ app_profile01 }} -templatePath {{ was_path }}/profileTemplates/default"
+  when: appsrv01.stat.exists == False
+

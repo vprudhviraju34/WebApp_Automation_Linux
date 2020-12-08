@@ -1,0 +1,27 @@
+- name: Unmount /infra_automation
+  block:
+     - name: Unmount /infra_automation and powerdown the host
+       mount: 
+         path: /infra_automation
+         state: absent
+
+     - pause: 
+         minutes: 2
+
+     - shell: df -h /infra_automation
+       register: output
+       ignore_errors: yes 
+     
+     - debug:
+         msg: "{{ output.stdout_lines }}"
+
+     - set_fact:
+           app: "{{ pwd_wasadm }}"
+       no_log: true
+
+     - name: Create application account
+       user:
+         name: wasadm 
+         password: "{{ app| password_hash('sha512') }}"
+         update_password: always 
+

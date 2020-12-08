@@ -1,0 +1,89 @@
+---
+- name: Create the {{was_root}} directory
+  become: true
+  become_user: root
+  file:
+    path: "{{was_root}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+- name: Create the {{was_path}} directory
+  become: true
+  become_user: root
+  file:
+    path: "{{was_path}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+- name: Create the {{ was_tmp }} directory
+  file:
+    path: "{{ was_tmp }}"
+    mode: 777
+    state: directory
+
+- name: Create the {{iim_path}} directory
+  become: true
+  become_user: root
+  file:
+    path: "{{iim_path}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+- name: Create the {{iim_repo}} directory
+  become: true
+  become_user: root
+  file:
+    path: "{{iim_repo}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+- name: Create the {{was_repo}} directory
+  become: true
+  become_user: root
+  file:
+    path: "{{was_repo}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+- name: Create WASND-RP directory
+  become: true
+  become_user: root
+  file:
+    path: "{{was_repo_rp}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+######
+- name: Create WASND-FP directory
+  become: true
+  become_user: root
+  file:
+    path: "{{was_repo_fp}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
+
+######
+
+- name: Create the {{sdk_repo}} directory
+  become: true
+  become_user: root
+  file:
+    path: "{{sdk_repo}}"
+    state: directory
+    owner: "{{was_user}}"
+    group: "{{was_grp}}"
+    recurse: yes
