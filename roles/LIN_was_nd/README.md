@@ -76,10 +76,6 @@ ansible-playbook --extra-vars='{"myhost": ['10.30.221.153', '10.30.221.154']}'  
 
 ```
 
-# License
-
-This playbook is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
 License
 -------
 
