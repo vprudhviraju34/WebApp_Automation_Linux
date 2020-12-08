@@ -9,6 +9,9 @@
   include_tasks: configure_wct.yml
   when: wct_status.stat.exists == false
 
+- name: cleanup
+  include_tasks: clean.yml
+
 #- name: Remove apache and Source Temporary Directory
 #  include_tasks: del_src.yml
 #  when: wct_status.stat.exists == false

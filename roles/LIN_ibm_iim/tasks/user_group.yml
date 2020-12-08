@@ -1,6 +1,7 @@
 - name: create ibm-was group
   group:
     name: '{{ apache_group }}'
+    gid: '{{httpd_gid}}'
     system: true
     state: present
 
@@ -8,6 +9,7 @@
   user:
     name: '{{ apache_user }}'
     group: '{{ apache_group }}'
+    uid: '{{httpd_uid}}'
     createhome: true
     state: present
     system: true

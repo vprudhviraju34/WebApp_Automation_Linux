@@ -1,6 +1,7 @@
 - name: create ibm-was group
   group:
     name: '{{ was_adm_grp }}'
+    gid: '{{ wasadm_gid}}'
     system: true
     state: present
 
@@ -8,6 +9,7 @@
   user:
     name: '{{ was_adm_user }}'
     group: '{{ was_adm_grp }}'
+    uid: '{{wasadm_uid}}'
     createhome: true
     state: present
     system: true
@@ -20,7 +22,7 @@
 - name: "Change Permissions and ownership of the directories"
   file:
     path: '{{appl_src}}'
-    mode: '0775'
+    mode: '0755'
     recurse: yes
 
 # - name: Copy installers source from Ansible Controller

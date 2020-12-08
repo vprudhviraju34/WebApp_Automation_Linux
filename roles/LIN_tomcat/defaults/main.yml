@@ -15,3 +15,6 @@ tomcat_install_java: True
 java_package: java-1_8_0-openjdk 
 rhel_java_package: java-1.8.0-openjdk 
 #java_home: /usr/lib64/jvm/jre-1.8.0-openjdk
+#
+tomcat_uid: 10005
+tomcat_gid: 10005

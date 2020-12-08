@@ -10,34 +10,36 @@ apache_dir:  /appl/freeware
 apache_system_user: webadm
 apache_system_group: webgrp
 apache_dir_mode: 0755
+apache_uid: 10000
+apache_gid: 10000
 
-pbgroupname: pbwebapp
-rungroupname: runwebapp
-
-service_group:
-  - name: webadm
-    sudo: false
-
-pbwebapp_group:
-  - name: pbwebapp
-    sudo: false
-
-pbwebapp_ids:
-  - pvegesh
-  - aquadir
-  - amkundu
-  - deshmuv
-
-runwebapp_ids:
-  - hmmahad
-  - akuruva
-  - avdaram
-  - nmahabo
-  - kommanh
-  - bkattam
-  - mjayach
-  - kuamith
-  - subbaiv
-  - rcholle
-  - poornav
-  - nvemula
+#pbgroupname: pbwebapp
+#rungroupname: runwebapp
+#
+#service_group:
+#  - name: webadm
+#    sudo: false
+#
+#pbwebapp_group:
+#  - name: pbwebapp
+#    sudo: false
+#
+#pbwebapp_ids:
+#  - pvegesh
+#  - aquadir
+#  - amkundu
+#  - deshmuv
+#
+#runwebapp_ids:
+#  - hmmahad
+#  - akuruva
+#  - avdaram
+#  - nmahabo
+#  - kommanh
+#  - bkattam
+#  - mjayach
+#  - kuamith
+#  - subbaiv
+#  - rcholle
+#  - poornav
+#  - nvemula

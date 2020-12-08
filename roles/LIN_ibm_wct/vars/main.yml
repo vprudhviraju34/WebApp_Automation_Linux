@@ -19,3 +19,16 @@ dir_wct_fp: /appl/source/wct_fp
 dir_wct: /appl/IBM/WebSphere
 dir_app_wct: /appl/IBM/WebSphere/Toolbox
 dir_install_mgr: /appl/IBM/InstallationManager
+
+
+ihs_files:
+  - agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip
+  - ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
+  - 9.0.5-WS-IHSPLG-FP006.zip
+  - 9.0.5-WS-IHSPLG-RP.zip
+  - was.repo.9000.ihs.zip
+  - was.repo.9000.plugins.zip
+  - was.repo.90500.wct.zip
+  - 9.0.5-WS-WCT-RP.zip
+  - 9.0.5-WS-WCT-FP006.zip
+

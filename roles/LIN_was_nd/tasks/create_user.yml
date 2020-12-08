@@ -3,6 +3,7 @@
 - name: create ibm-was group
   group:
     name: '{{ was_grp }}'
+    gid: '{{wasadm_gid}}'
     system: true
     state: present
 
@@ -10,6 +11,7 @@
   user:
     name: '{{ was_user }}'
     group: '{{ was_grp }}'
+    uid: '{{wasadm_uid}}'
     createhome: true
     state: present
     system: true

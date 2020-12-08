@@ -12,6 +12,7 @@
 - name: create apache group
   group:
     name: '{{ apache_system_group }}'
+    gid: '{{apache_gid}}'
     system: true
     state: present
 
@@ -19,6 +20,7 @@
   user:
     name: '{{ apache_system_user }}'
     group: '{{ apache_system_group }}'
+    uid: '{{apache_uid}}'
     createhome: true
     state: present
     system: true

@@ -12,6 +12,7 @@
 - name: create tomcat group
   group:
     name: '{{ tomcat_system_group }}'
+    gid: '{{tomcat_gid}}'
     system: true
     state: present
 
@@ -19,6 +20,7 @@
   user:
     name: '{{ tomcat_system_user }}'
     group: '{{ tomcat_system_group }}'
+    uid: '{{tomcat_uid}}'
     createhome: true
     state: present
     system: true

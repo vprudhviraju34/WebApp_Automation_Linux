@@ -17,3 +17,11 @@
   shell: "su wasadm '{{ profile_path }}/{{ app_profile01 }}/bin/startServer.sh' {{server_name01}}"
   register: server_start
   changed_when: server_start.rc == 0
+
+
+- name: deleting binaries from source path
+  file:
+    path: "{item}"
+    state: absent
+  with_items:
+    - "{{ was_files }}"
