@@ -21,7 +21,7 @@
 
 - name: deleting binaries from source path
   file:
-    path: "{item}"
+    path: "{{appl_src}}/{{item}}"
     state: absent
   with_items:
     - "{{ was_files }}"

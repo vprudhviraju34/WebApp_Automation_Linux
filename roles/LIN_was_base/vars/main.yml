@@ -45,4 +45,9 @@ was_files:
   - 9.0.5-WS-WAS-RP.zip
   - 9.0.5-WS-WAS-FP006.zip
   - ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
+  - ibm_im
+  - ibmsdk
+  - was
+  - was-FP
+  - was-RP
 

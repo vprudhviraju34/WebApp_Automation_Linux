@@ -31,4 +31,14 @@ ihs_files:
   - was.repo.90500.wct.zip
   - 9.0.5-WS-WCT-RP.zip
   - 9.0.5-WS-WCT-FP006.zip
-
+  - ibm_im 
+  - ibmsdk
+  - ihs
+  - ihs_fp
+  - ihs_rp
+  - Plugins
+  - plg_fp
+  - plg_rp
+  - wct
+  - wct_rp
+  - wct_fp
