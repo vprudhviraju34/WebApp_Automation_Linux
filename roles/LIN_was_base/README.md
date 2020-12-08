@@ -11,7 +11,7 @@ This role requires root access
 Tested on Operating System
 --------------------------
 
-SUSE-12-SP-3
+SUSE-12-SP-5 & RHEL
 
 Role Variables
 --------------
