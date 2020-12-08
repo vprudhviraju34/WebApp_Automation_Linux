@@ -12,7 +12,7 @@ No special requirements; note that this role requires root access,
 Tested on Operating System
 --------------------------
 
-SUSE-12-SP-3
+SUSE-12-SP-5 & RHEL
 
 Role Variables
 --------------
@@ -109,9 +109,9 @@ Diamler
 Author Information
 ------------------
 
-This role was created by Hewlett-Packard-Enterprise for Daimler
+This role was created by ITT APAC Webapp team
 
 Support
 -------
 
-In case of support - please contact Hewlett-Packard Enterprise
+In case of support - please contact Webapp team at dwa_128-iti_webappteam_npm-editor@daimler.com
