@@ -11,8 +11,8 @@ No special requirements; note that this role requires root access,
 Tested on Operating System
 --------------------------
 
-SUSE-12-SP-3
-Tested Version of Tomcat: apache-tomcat-8.5.14
+SUSE-12-SP-5 & RHEL
+Tested Version of Tomcat: tomcat - 9.0.40
 Java Version: java-1.8.0-openjdk
 
 Role Variables
@@ -23,8 +23,8 @@ Role Variables
 | Variable Name | Default Values | Variable Type | Comments |
 |------------------------|---------------------------|---------------------------|------------------------------|
 | myhost | TDAC00000943.cqcorp.daimler.net | Parameter | DataType=LIST Need to passed by vRA/SNOW in form of EXTRA-VARS on Ansible Tower. It can be IP Address or FQDN |
-| tomcat_package | apache-tomcat-8.5.14.tar.gz | Parameter | Binary Filename: To be passed by vRA/SNOW |
-| tomcat_version | 8.5.14 | Paramter | Needs to be passed by vRA/SNOW as EXTRA-VARS on Ansible Tower |
+| tomcat_package | tomcat.tar.gz | Parameter | Binary Filename: To be passed by vRA/SNOW |
+| tomcat_version | 9.0.40 | Paramter | Needs to be passed by vRA/SNOW as EXTRA-VARS on Ansible Tower |
 
 
 * Note: The variables that are of "Variable Type=Parameter" they are needed to be passed in form of EXTRA-VARS in TOWER REST API calls or in the EXTRA-VARIABLES section ANSIBLE TOWER >> TEMPLATES >> EXTRA-VARIABLES
