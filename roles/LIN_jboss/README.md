@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Installs and configures JBOSS server on SUSE Servers.
+Installs and configures JBOSS on SUSE & RHEL Servers.
 
 Requirements
 ------------
@@ -11,8 +11,8 @@ No special requirements; note that this role requires root access,
 Tested on Operating System
 --------------------------
 
-SUSE-12-SP-3
-Jboss Version: jboss-eap-7.0.0
+SUSE-12-SP-5 & RHEL
+Jboss Version: jboss-eap-7.3.0
 
 Role Variables
 --------------
@@ -22,8 +22,8 @@ Role Variables
 | Variable Name | Default Values | Variable Type | Comments |
 |------------------------|---------------------------|---------------------------|------------------------------|
 | myhost | TDAC00000943 | Parameter | Need to passed by vRA/SNOW in form of EXTRA-VARS on Ansible Tower. It can be IP Address or FQDN |
-| jboss_installer | jboss-eap-7.0.0.zip | Parameter/Internal | Binary Filename: If the version changes then pass the new name of the filename and change the 'jboss_base_version' accordingly |
-| jboss_base_version | 7.0 | Parameter/Internal | Change the version by looking at the source file of jboss e.g if jboss-eap-7.0.0.zip file is source then 7.0 is the base version |
+| jboss_installer | jboss-eap-7.3.0.zip | Parameter/Internal | Binary Filename: If the version changes then pass the new name of the filename and change the 'jboss_base_version' accordingly |
+| jboss_base_version | 7.3 | Parameter/Internal | Change the version by looking at the source file of jboss e.g if jboss-eap-7.0.0.zip file is source then 7.0 is the base version |
 | java_home | /usr/lib64/jvm/jre-1.8.0-openjdk | Internal | Change according to the environment |
 
 * Note: The variables that are of "Variable Type=Parameter" they are needed to be passed in form of EXTRA-VARS in TOWER REST API calls or in the EXTRA-VARIABLES section ANSIBLE TOWER >> TEMPLATES >> EXTRA-VARIABLES
@@ -48,7 +48,7 @@ Dependencies
 For example: These three file needs to consolidated into 1 zip file
 
   jboss-eap_1_OF_3.zip |
-  jboss-eap_2_OF_3.zip | ==> jboss-eap-7.0.0.zip
+  jboss-eap_2_OF_3.zip | ==> jboss-eap-7.3.0.zip
   jboss-eap_3_OF_3.zip |
 
 Launching Job Template using Tower REST API
