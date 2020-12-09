@@ -12,6 +12,10 @@
 - hosts: myhosts
   become: yes
   roles:
+    - role: LIN_was_nd
+      when:
+        - application == "LIN_was_nd"
+     
     - role: LIN_apache
       when:
         - application == "LIN_apache"
@@ -27,10 +31,6 @@
     - role: LIN_was_base
       when:
         - application == "LIN_was_base"
-
-    - role: LIN_was_nd
-      when:
-        - application == "LIN_was_nd"
 
     - role: LIN_ibm_iim 
       when:

@@ -22,20 +22,20 @@
 - name: "Install IBM WAS server"
   include_tasks: install_wasnd.yml
 
-- name: "Setup first node"
-  include_tasks: setup_first_node.yml
-  when: ansible_play_hosts.index(inventory_hostname) == 0
+  #- name: "Setup first node"
+  #include_tasks: setup_first_node.yml
+  #when: ansible_play_hosts.index(inventory_hostname) == 0
 
 #- name: "Setup second node"
 #  include_tasks: setup_second_node.yml
 #  when: ansible_play_hosts.index(inventory_hostname) == 1
 
-- name: "Cleanup directories"
-  include_tasks: cleanup.yml
+  #- name: "Cleanup directories"
+  #include_tasks: cleanup.yml
 
-- name: "Kill java and restart Dmgr/Nodeagent/Server on first node"
-  include_tasks: stop_start_node1.yml
-  when: ansible_play_hosts.index(inventory_hostname) == 0
+  #- name: "Kill java and restart Dmgr/Nodeagent/Server on first node"
+  #include_tasks: stop_start_node1.yml
+  #when: ansible_play_hosts.index(inventory_hostname) == 0
 
 #- name: "Kill java and restart Nodeagent/Server on second node"
 #  include_tasks: stop_start_node2.yml

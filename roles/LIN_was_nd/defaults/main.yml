@@ -75,3 +75,6 @@ was_files:
   - WAS_ND_V9.0_MP_ML.zip
 
 
+dev_binary_wasnd: /infra_automation/Dev/01-Linux/10-Applications/v1/300_WebSphere/
+uat_binary_wasnd: /infra_automation/UAT/01-Linux/10-Applications/v1/300_WebSphere/
+prod_binary_wasnd: /infra_automation/Prod/01-Linux/10-Applications/v1/300_WebSphere/
