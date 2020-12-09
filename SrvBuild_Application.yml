@@ -11,39 +11,107 @@
 
 - hosts: myhosts
   become: yes
-  roles:
-    - role: LIN_was_nd
-      when:
-        - application == "LIN_was_nd"
-     
-    - role: LIN_apache
-      when:
-        - application == "LIN_apache"
+  tasks:
+   - block:
+      - name: Apache installation
+        include_role:
+           name: LIN_apache
+        when:
+          - application == "LIN_apache"
 
-    - role: LIN_tomcat
-      when:
-        - application == "LIN_tomcat"
+   - block:
+      - name: WASND installation
+        include_role:
+           name: LIN_was_nd
+        when:
+          - application == "LIN_was_nd"
 
-    - role: LIN_jboss
-      when:
-        - application == "LIN_jboss"
+   - block:
+      - name: Tomcat installation
+        include_role:
+           name: LIN_tomcat
+        when:
+          - application == "LIN_tomcat"
 
-    - role: LIN_was_base
-      when:
-        - application == "LIN_was_base"
+   - block:
+      - name: JBoss installation
+        include_role:
+           name: LIN_jboss
+        when:
+          - application == "LIN_jboss"
 
-    - role: LIN_ibm_iim 
-      when:
-        - application == "LIN_ibm_http"
 
-    - role: LIN_ibm_http
-      when:
-        - application == "LIN_ibm_http"
+   - block:
+      - name: WAS Base installation
+        include_role:
+           name: LIN_was_base
+        when:
+          - application == "LIN_was_base"
 
-    - role: LIN_ibm_plugin
-      when:
-        - application == "LIN_ibm_http"
 
-    - role: LIN_ibm_wct
-      when:
-        - application == "LIN_ibm_http"
+   - block:
+      - name: IBM IIM installation
+        include_role:
+           name: LIN_ibm_iim
+        when:
+          - application == "LIN_ibm_http"
+
+   - block:
+      - name: IBM HTTP installation
+        include_role:
+           name: LIN_ibm_http
+        when:
+          - application == "LIN_ibm_http"
+
+
+   - block:
+      - name:  IBM Plugin installation
+        include_role: LIN_ibm_plugin
+           name:
+        when:
+          - application == "LIN_ibm_http"
+            
+   - block:
+      - name: IBM WCT  installation
+        include_role:
+           name: LIN_ibm_wct
+        when:
+          - application == "LIN_ibm_http"
+            
+            
+            #  roles:
+            #    - role: LIN_was_nd
+            #      when:
+            #        - application == "LIN_was_nd"
+            #     
+            #    - role: LIN_apache
+            #      when:
+            #        - application == "LIN_apache"
+            #
+            #    - role: LIN_tomcat
+            #      when:
+            #        - application == "LIN_tomcat"
+            #
+            #    - role: LIN_jboss
+            #      when:
+            #        - application == "LIN_jboss"
+            #
+            #    - role: LIN_was_base
+            #      when:
+            #        - application == "LIN_was_base"
+            #
+            #    - role: LIN_ibm_iim 
+            #      when:
+            #        - application == "LIN_ibm_http"
+            #
+            #    - role: LIN_ibm_http
+            #      when:
+            #        - application == "LIN_ibm_http"
+            #
+            #    - role: LIN_ibm_plugin
+            #      when:
+            #        - application == "LIN_ibm_http"
+            #
+            #    - role: LIN_ibm_wct
+            #      when:
+            #        - application == "LIN_ibm_http"

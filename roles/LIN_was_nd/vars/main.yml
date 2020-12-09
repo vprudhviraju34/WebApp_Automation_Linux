@@ -1,9 +1,4 @@
 ---
-pwd_tomcat: 'emFW4*qK5nc8%ZYGV=7X'
-pwd_webadm: 'AbnGC6hPm3dEf1+=q-Rs'
-pwd_oracle: 'JxFkZA783%m5u.hN6G4V22'
-pwd_pginsta: 'JxFkZA783%m5u.hN6G4V23'
-
 
 pwd_wasadm: 'JxFkZA783%m5u.hN6G4V24'
 was_adm_pwd: "{xor}NW06Oig+LG5vbw=="
