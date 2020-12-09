@@ -66,8 +66,8 @@
 
    - block:
       - name:  IBM Plugin installation
-        include_role: LIN_ibm_plugin
-           name:
+        include_role: 
+           name: LIN_ibm_plugin
         when:
           - application == "LIN_ibm_http"
             
