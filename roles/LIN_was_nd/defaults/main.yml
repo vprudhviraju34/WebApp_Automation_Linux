@@ -14,16 +14,16 @@ was_adm_user: "wasadmin"
 dcrypt_password: "{{ hostvars[myhost[0]].dcry_password }}"
 mount_point: /appl/IBM/
 pass_repo: "/var/pass.sh"
-
+mount_point: "/appl/IBM"
 iim_path: "/appl/IBM/InstallationManager"
 iim_repo: "{{ was_root }}/ibm_im" #Used for extracting agent_installer.
-iim_src_file: "agent.installer.linux.gtk.x86_64_1.9.1003.20200730_2125.zip"
+iim_src_file: "agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip"
 
 sdk_repo: "{{ was_root}}/ibmsdk"
-sdk_src_file: ibm-java-sdk-8.0-6.15-linux-x64-installmgr.zip
+sdk_src_file: ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
 
 was_src_file: "WAS_ND_V9.0_MP_ML.zip"
-was_src_file_fp: "9.0.5-WS-WAS-FP005.zip"
+was_src_file_fp: "9.0.5-WS-WAS-FP006.zip"
 was_src_file_rp: "9.0.5-WS-WAS-RP.zip"
 was_repo: "{{ was_root }}/WASND/"
 was_repo_fp: "{{ was_root }}/WASND-FP/"      
@@ -65,16 +65,19 @@ required_vars:
   - cluster_name
 #  - member_name01
 #  - member_name02
-
+was_adm_pwd: "{xor}NW06Oig+LG5vbw=="
 
 was_files:
-  - agent.installer.linux.gtk.x86_64_1.9.1003.20200730_2125.zip
-  - 9.0.5-WS-WAS-RP.zip
-  - 9.0.5-WS-WAS-FP005.zip
-  - ibm-java-sdk-8.0-6.15-linux-x64-installmgr.zip
+  - agent.installer.linux.gtk.x86_64_1.9.1004.20201109_1718.zip
   - WAS_ND_V9.0_MP_ML.zip
+  - 9.0.5-WS-WAS-RP.zip
+  - 9.0.5-WS-WAS-FP006.zip
+  - ibm-java-sdk-8.0-6.16-linux-x64-installmgr.zip
+  - ibm_im
+  - ibmsdk
+  - WASND
+  - WASND-FP
+  - WASND-RP
 
 
-dev_binary_wasnd: /infra_automation/Dev/01-Linux/10-Applications/v1/300_WebSphere/
-uat_binary_wasnd: /infra_automation/UAT/01-Linux/10-Applications/v1/300_WebSphere/
-prod_binary_wasnd: /infra_automation/Prod/01-Linux/10-Applications/v1/300_WebSphere/
+

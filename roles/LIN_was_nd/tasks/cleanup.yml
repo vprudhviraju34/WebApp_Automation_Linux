@@ -1,6 +1,7 @@
 ---
+
 - name: Change permission and ownership of WAS directories
-  file: 
+  file:
     state: directory
     path: "{{item}}"
     owner: "{{was_user}}"
@@ -9,28 +10,16 @@
   with_items:
     - "{{was_root}}"
     - "{{dir_was_path}}"
+    - "{{mount_point}}"
     #- "{{was_path}}"
  #   - "{{was_tmp}}"
     - "{{iim_path}}"
 #    - "{{iim_repo}}"
 
-
-- name: Clean IIM repo
+- name: deleting binaries from source path
   file:
+    path: "{{was_src}}/{{item}}"
     state: absent
-    path: "{{ iim_repo }}"
+  with_items:
+    - "{{ was_files }}"
 
-- name: Clean WAS repo
-  file:
-    state: absent
-    path: "{{ was_repo }}"
-
-- name: Clean sdk repo
-  file:
-    state: absent
-    path: "{{ sdk_repo }}"
-
-- name: Clean password Repo
-  file:
-    state: absent
-    path: "{{ pass_repo }}"
