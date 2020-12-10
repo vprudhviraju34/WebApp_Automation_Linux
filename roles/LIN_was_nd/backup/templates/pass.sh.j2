@@ -1,5 +1,0 @@
-#!/bin/bash
-export WAS_HOME=/appl/IBM/WebSphere/AppServer
-export MYCLASSPATH=$WAS_HOME/plugins/com.ibm.ws.runtime.jar:$WAS_HOME/lib/bootstrap.jar:$WAS_HOME/plugins/com.ibm.ws.emf.jar:$WAS_HOME/lib/ffdc.jar:$WAS_HOME/plugins/org.eclipse.emf.ecore.jar:$WAS_HOME/plugins/org.eclipse.emf.common.jar
-PASSWORD=`$WAS_HOME/java/8.0/bin/java -cp $MYCLASSPATH com.ibm.ws.security.util.PasswordDecoder "{{ was_adm_pwd }}"`
-echo $PASSWORD | awk 'NF>1{print $NF}' | tr -d '"'

@@ -3,7 +3,8 @@
 
 - name: Change Permissions and ownership of tomcat directory
   file:
-    path: '{{ tomcat_dir }}/tomcat'
+          #path: '{{ tomcat_dir }}/tomcat'
+    path: '{{ tomcat_dir }}'
     owner: '{{ tomcat_system_user }}'
     group: '{{ tomcat_system_group }}'
     mode: '{{ tomcat_dir_mode }}'

@@ -1,9 +1,0 @@
----
-- name: Install pre-requisites Zypper
-  zypper:
-    name: ['unzip', 'tar', 'wget'] 
-    state: present
-  when: ansible_os_family == "Suse"
-
-
-
