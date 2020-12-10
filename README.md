@@ -77,4 +77,12 @@ License
 MIT/ BSD
 Diamler
 
+Author Information
+------------------
 
+This role was created by ITT APAC Webapp team
+
+Support
+-------
+
+In case of support - please contact Webapp team at dwa_128-iti_webappteam_npm-editor@daimler.com
