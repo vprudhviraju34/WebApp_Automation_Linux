@@ -75,7 +75,7 @@ License
 -------
 
 MIT/ BSD
-Diamler
+D
 
 Author Information
 ------------------
