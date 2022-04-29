@@ -102,7 +102,7 @@ License
 -------
 
 MIT/ BSD
-Diamler
+
 
 Author Information
 ------------------
