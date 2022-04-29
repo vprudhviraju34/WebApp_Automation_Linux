@@ -21,7 +21,7 @@ Role Variables
 
 | Variable Name | Default Values | Variable Type | Comments |
 |------------------------|---------------------------|---------------------------|------------------------------|
-| myhost | TDAC00000943 | Parameter | Need to passed by vRA/SNOW in form of EXTRA-VARS Ansible Tower. It can be IP Address or FQDN |
+| myhost | T0000943 | Parameter | Need to passed by vRA/SNOW in form of EXTRA-VARS Ansible Tower. It can be IP Address or FQDN |
 | agent_installer | agent.installer.lnx.gtk.x86_64_1.8.5.zip | Parameter/Internal | It is file name which can change based on the WAS software Binaries. Daimler to decide whether it will be Parameter/Internal |
 | ibm_was_installer | was.repo.9000.ihs.zip | Parameter/Internal | It is file name. IBM-IHS installer it can be 8.X.X or 9.x.x version of IBM-WAS. Daimler to decide whether it will be Parameter/Internal |
 | ibm_plugin_installer | was.repo.9000.plugins.zip | Parameter/Internal | It is file name. IBM-IHS-PLUGIN installer it can be 8.X.X or 9.x.x version of IBM-WAS. Daimler to decide whether it will be Parameter/Internal |
@@ -33,8 +33,8 @@ Role Variables
 ```
 ---
 myhost:
-  - TDAC00000943.cqcorp.daimler.net
-  - TDAC00000944.cqcorp.daimler.net
+  - .cqcorp.daimler.net
+  - .cqcorp.daimler.net
 ```
 
 Pre-requisties
@@ -114,4 +114,4 @@ This role was created by ITT APAC Webapp team
 Support
 -------
 
-In case of support - please contact Webapp team at dwa_128-iti_webappteam_npm-editor@daimler.com
+In case of support - please contact Webapp team at 
