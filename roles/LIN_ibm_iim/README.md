@@ -25,7 +25,7 @@ Role Variables
 | agent_installer | agent.installer.lnx.gtk.x86_64_1.8.5.zip | Parameter/Internal | It is file name which can change based on the WAS software Binaries. Daimler to decide whether it will be Parameter/Internal |
 | ibm_was_installer | was.repo.9000.ihs.zip | Parameter/Internal | It is file name. IBM-IHS installer it can be 8.X.X or 9.x.x version of IBM-WAS. Daimler to decide whether it will be Parameter/Internal |
 | ibm_plugin_installer | was.repo.9000.plugins.zip | Parameter/Internal | It is file name. IBM-IHS-PLUGIN installer it can be 8.X.X or 9.x.x version of IBM-WAS. Daimler to decide whether it will be Parameter/Internal |
-| java_sdk | sdk.repo.8030.java8.linux.zip | Parameter/Internal | It is file name. JAVA sdk binary. Daimler to decide whether it should be Parameter/Internal |
+| java_sdk | sdk.repo.8030.java8.linux.zip | Parameter/Internal | It is file name. JAVA sdk binary.  to decide whether it should be Parameter/Internal |
 | ibm_was_installer_fp | 9.0.0-WS-IHSPLG-FP011.zip | Need to pass by vRA/SNOW. This is the FixPack installation software which IBM release periodically |
 
 * Note: The variables that are of "Variable Type=Parameter" they are needed to be passed in form of EXTRA-VARS in TOWER REST API calls or in the EXTRA-VARIABLES section ANSIBLE TOWER >> TEMPLATES >> EXTRA-VARIABLES
@@ -57,12 +57,12 @@ Launching Job Template using Tower REST API
 ------------------------------------------
 * Use the following REST API call to launch the Ansible Tower Job Template from anywhere. This will connect the Ansible Tower from any where as far as the tower username/password has been provided in the following curl command.
 ```
-curl -X POST --user <TOWER_USERNAME>:<TOWER_PASSWORED> -d '{"extra_vars": "{\"myhost\": \"[TDAC00000943.cqcorp.daimler.net]\"}"}' -H "Content-Type: application/json" https://<TOWER FQDN>>/api/v1/job_templates/<JOB_TEMPLATE_ID>/launch/ -k
+curl -X POST --user <TOWER_USERNAME>:<TOWER_PASSWORED> -d '{"extra_vars": "{\"myhost\": \"[TDAC00000943.cqcorp..net]\"}"}' -H "Content-Type: application/json" https://<TOWER FQDN>>/api/v1/job_templates/<JOB_TEMPLATE_ID>/launch/ -k
 ```
 * Sample values for the feild that are used in above curl command
     * TOWER_USERNAME: admin
     * TOWER_PASSWORD: P@ssw0rd
-    * TOWER_FQDN: Can be IP Address or Fully Qualified Domain Name: TDAC00000943.cqcorp.daimler.com
+    * TOWER_FQDN: Can be IP Address or Fully Qualified Domain Name: TDAC00000943.cqcorp..com
     * JOB_TEMPLATE_ID: Pre-requisite to obtain this is : Job Template with some Job Template name should already exists with Project, Credentials, Inventory attached to it. Use the following curl to fetch the Job ID by giving the JOB_TEMPLATE_NAME=MW_COMPONENT_JOB. For example:
 ```
 curl -X GET --user admin:ansiblerocks https://tower.example.com/api/v1/job_templates/?name="MW_COMPONENT_JOB" -k -s | json_pp
