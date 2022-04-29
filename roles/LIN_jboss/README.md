@@ -21,7 +21,7 @@ Role Variables
 
 | Variable Name | Default Values | Variable Type | Comments |
 |------------------------|---------------------------|---------------------------|------------------------------|
-| myhost | TDAC00000943 | Parameter | Need to passed by vRA/SNOW in form of EXTRA-VARS on Ansible Tower. It can be IP Address or FQDN |
+| myhost |  | Parameter | Need to passed by vRA/SNOW in form of EXTRA-VARS on Ansible Tower. It can be IP Address or FQDN |
 | jboss_installer | jboss-eap-7.3.0.zip | Parameter/Internal | Binary Filename: If the version changes then pass the new name of the filename and change the 'jboss_base_version' accordingly |
 | jboss_base_version | 7.3 | Parameter/Internal | Change the version by looking at the source file of jboss e.g if jboss-eap-7.0.0.zip file is source then 7.0 is the base version |
 | java_home | /usr/lib64/jvm/jre-1.8.0-openjdk | Internal | Change according to the environment |
@@ -31,8 +31,8 @@ Role Variables
 ```
 ---
 myhost:
-  - TDAC00000943.cqcorp.daimler.net
-  - TDAC00000944.cqcorp.daimler.net
+  - .cqcorp..net
+  - .cqcorp..net
 ```
 
 Pre-requisties
@@ -55,12 +55,12 @@ Launching Job Template using Tower REST API
 ------------------------------------------
 * Use the following REST API call to launch the Ansible Tower Job Template from anywhere. This will connect the Ansible Tower from any where as far as the tower username/password has been provided in the following curl command.
 ```
-curl -X POST --user <TOWER_USERNAME>:<TOWER_PASSWORED> -d '{"extra_vars": "{\"myhost\": \"[TDAC00000943.cqcorp.daimler.net]\"}"}' -H "Content-Type: application/json" https://<TOWER FQDN>>/api/v1/job_templates/<JOB_TEMPLATE_ID>/launch/ -k
+curl -X POST --user <TOWER_USERNAME>:<TOWER_PASSWORED> -d '{"extra_vars": "{\"myhost\": \"[.cqcorp..net]\"}"}' -H "Content-Type: application/json" https://<TOWER FQDN>>/api/v1/job_templates/<JOB_TEMPLATE_ID>/launch/ -k
 ```
 * Sample values for the feild that are used in above curl command
     * TOWER_USERNAME: admin
     * TOWER_PASSWORD: P@ssw0rd
-    * TOWER_FQDN: Can be IP Address or Fully Qualified Domain Name: TDAC00000943.cqcorp.daimler.com
+    * TOWER_FQDN: Can be IP Address or Fully Qualified Domain Name: .cqcorp..com
     * JOB_TEMPLATE_ID: Pre-requisite to obtain this is : Job Template with some Job Template name should already exists with Project, Credentials, Inventory attached to it. Use the following curl to fetch the Job ID by giving the JOB_TEMPLATE_NAME=MW_COMPONENT_JOB. For example:
 ```
 curl -X GET --user admin:ansiblerocks https://tower.example.com/api/v1/job_templates/?name="MW_COMPONENT_JOB" -k -s | json_pp
@@ -112,5 +112,5 @@ This role was created by ITT APAC Webapp team
 Support
 -------
 
-In case of support - please contact Webapp team at dwa_128-iti_webappteam_npm-editor@daimler.com
+In case of support - please contact Webapp team at 
 
